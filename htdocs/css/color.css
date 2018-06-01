@@ -1,0 +1,23 @@
+.bg-purple { background-color: var(--purple); }
+
+.bg-green { background-color: #0fb8ad; }
+
+.bg-header { background: linear-gradient(141deg, #0fb8ad 0%, #1fc8db 51%, #2cb5e8 75%); }
+
+.bg-tropical-pink { background-color: #FF4062; }
+
+.bg-liquid-sunset { background-color: #FEB47B; }
+
+.bg-heatwave { background-color: #FF7E5F; }
+
+.bg-paradise { background-color: #765285; }
+
+.bg-nightfall { background-color: #351C4D; }
+
+.bg-icing { background-color: #DAE9E4; }
+
+.bg-sakura { background-color: #ECC7C0; }
+
+.bg-melon { background-color: #FDAE84; }
+
+.bg-cranberry { background-color: #3C2E3D; }
