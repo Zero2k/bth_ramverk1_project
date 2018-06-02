@@ -127,5 +127,21 @@ return [
                 return $navbar;
             }
         ],
+        "userController" => [
+            "shared" => true,
+            "callback" => function () {
+                $obj = new \Vibe\User\UserController();
+                $obj->setDI($this);
+                return $obj;
+            }
+        ],
+        "database" => [
+            "shared" => true,
+            "callback" => function () {
+                $obj = new \Anax\Database\DatabaseQueryBuilder();
+                $obj->configure("database.php");
+                return $obj;
+            }
+        ],
     ],
 ];

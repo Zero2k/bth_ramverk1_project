@@ -17,6 +17,11 @@ return [
             "file" => __DIR__ . "/route2/routes.php",
         ],
         [
+            // Add routes from userController and mount on user/
+            "mount" => null,
+            "file" => __DIR__ . "/route2/userController.php",
+        ],
+        [
             // These are for internal error handling and exceptions
             "mount" => null,
             "file" => __DIR__ . "/route2/internal.php",
