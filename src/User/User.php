@@ -27,8 +27,7 @@ class User extends ActiveRecordModel
     public $created;
     public $updated;
     public $deleted;
-    public $active;
-    public $admin;
+    public $admin = 0;
 
 
 
@@ -41,8 +40,8 @@ class User extends ActiveRecordModel
      */
     public function createUser($username, $email, $password)
     {
-        $this->username = $username;
-        $this->email = $email;        
+        $this->username = strtolower($username);
+        $this->email = strtolower($email);
         $this->setPassword($password);
         $this->save();
     }

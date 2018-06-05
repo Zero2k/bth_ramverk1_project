@@ -54,6 +54,32 @@ class UserController implements
 
 
 
+    public function viewUserProfile($id = null)
+    {
+        $title      = "Profile";
+        $view       = $this->di->get("view");
+        $pageRender = $this->di->get("pageRender");
+        $session    = $this->di->get("session");
+
+        if (!$id && $session->get("userId")) {
+            $content = "Current user";
+        } elseif (!$id && !$session->get("userId")) {
+            $this->di->get("response")->redirect("login");
+        } else {
+            $content = "Find user with ID";
+        }
+
+        $data = [
+            "content" => $content,
+        ];
+
+        $view->add("profile/view", $data);
+
+        $pageRender->renderPage(["title" => $title]);
+    }
+
+
+
     /**
      * Description.
      *
@@ -65,7 +91,7 @@ class UserController implements
      */
     public function getPostLogin()
     {
-        $title      = "A login page";
+        $title      = "Login";
         $view       = $this->di->get("view");
         $pageRender = $this->di->get("pageRender");
         $form       = new UserLoginForm($this->di);
@@ -94,7 +120,7 @@ class UserController implements
      */
     public function getPostCreateUser()
     {
-        $title      = "A create user page";
+        $title      = "Sign Up";
         $view       = $this->di->get("view");
         $pageRender = $this->di->get("pageRender");
         $form       = new CreateUserForm($this->di);
@@ -108,5 +134,16 @@ class UserController implements
         $view->add("page/sign-up", $data);
 
         $pageRender->renderPage(["title" => $title]);
+    }
+
+    /**
+     * Handler user logout.
+     *
+     * @return void
+     */
+    public function logoutUser()
+    {
+        $this->di->get('session')->destroy();
+        $this->di->get("response")->redirect("login");
     }
 }

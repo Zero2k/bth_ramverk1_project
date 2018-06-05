@@ -1,3 +1,7 @@
+<?php
+    $url = $this->di->get("url");
+?>
+
 <main role="main">
     <div class="jumbotron jumbotron-fluid bg-header text-white">
         <div class="container">
@@ -12,27 +16,50 @@
                 </p>
                 </div>
                 <div class="col-lg-5">
-                <form>
-                <div class="form-group row">
-                    <label for="inputEmail3" class="col-sm-3 col-form-label">Username</label>
-                    <div class="col-sm-9">
-                    <input type="text" class="form-control" id="inputEmail3" placeholder="J. Doe">
+                <?php if (!$session->get("userId") && !$content): ?>
+                    <form>
+                        <div class="form-group row">
+                            <label for="inputEmail3" class="col-sm-3 col-form-label">Username</label>
+                            <div class="col-sm-9">
+                            <input type="text" class="form-control" id="inputEmail3" placeholder="J. Doe">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputEmail3" class="col-sm-3 col-form-label">Email</label>
+                            <div class="col-sm-9">
+                            <input type="email" class="form-control" id="inputEmail3" placeholder="you@example.com">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputPassword3" class="col-sm-3 col-form-label">Password</label>
+                            <div class="col-sm-9">
+                            <input type="password" class="form-control" id="inputPassword3" placeholder="*******">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-light">Sign Up</button>
+                    </form>
+                <?php else: ?>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 order-lg-first">
+                        <img src="<?= $content["gravatar"] ?>" alt="..." class="img-thumbnail">
+                    </div>
+                    <div class="col-lg-6 col-sm-6 order-lg-last">
+                        <h4><?= $content["username"] ?></h4>
+                        <small><cite title="San Francisco, USA">San Francisco, USA <i class="glyphicon glyphicon-map-marker">
+                        </i></cite></small>
+                        <p>
+                            <i class="glyphicon glyphicon-envelope"></i><?= $content["email"] ?>
+                            <br />
+                            <i class="glyphicon glyphicon-globe"></i><a href="http://www.jquery2dotnet.com">www.jquery2dotnet.com</a>
+                            <br />
+                            <i class="glyphicon glyphicon-gift"></i>June 02, 1988</p>
+                        <!-- Split button -->
+                        <div class="btn-group">
+                            <a class="btn btn-outline-light" href="<?= $url->create("profile")?>">View Profile</a>
+                        </div>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label for="inputEmail3" class="col-sm-3 col-form-label">Email</label>
-                    <div class="col-sm-9">
-                    <input type="email" class="form-control" id="inputEmail3" placeholder="you@example.com">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="inputPassword3" class="col-sm-3 col-form-label">Password</label>
-                    <div class="col-sm-9">
-                    <input type="password" class="form-control" id="inputPassword3" placeholder="*******">
-                    </div>
-                </div>
-                    <button type="submit" class="btn btn-light">Sign Up</button>
-                </form>
+                <?php endif ?>
                 </div>
             </div>
         </div>

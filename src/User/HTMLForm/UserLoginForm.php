@@ -60,7 +60,7 @@ class UserLoginForm extends FormModel
     public function callbackSubmit()
     {
         // Get values from the submitted form
-        $email = $this->form->value("email");
+        $email = strtolower($this->form->value("email"));
         $password = $this->form->value("password");
 
         $user = new User();
@@ -73,7 +73,12 @@ class UserLoginForm extends FormModel
            return false;
         }
     
-        $this->form->addOutput("User " . $user->username . " logged in.");
+        $session = $this->di->get("session");
+        $session->set("userId", $user->id);
+        $session->set("username", $user->username);
+        $session->set("userEmail", $user->email);
+        $this->di->get("response")->redirect("");
+        /* $this->form->addOutput("User " . $user->username . " logged in."); */
         return true;
     }
 }
