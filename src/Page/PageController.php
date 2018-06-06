@@ -7,6 +7,8 @@ use \Anax\Configure\ConfigureInterface;
 use \Anax\Configure\ConfigureTrait;
 use \Vibe\User\User;
 use \Vibe\Gravatar\Gravatar;
+use \Vibe\User\HTMLForm\CreateUserHomeForm;
+
 /**
 * Routes class.
 */
@@ -30,6 +32,7 @@ class PageController implements ConfigureInterface, InjectionAwareInterface
         $gravatar   = new Gravatar();
         $content = null;
 
+
         if ($session->get("userId")) {
             $user = $user->find("id", $session->get("userId"));
             $content["username"] = ucfirst($user->username);
@@ -37,9 +40,25 @@ class PageController implements ConfigureInterface, InjectionAwareInterface
             $content["gravatar"] = $gravatar->url($user->email, 180);
         }
 
+        if (!empty($_POST)) {
+            $username = isset($_POST["username"]) ? $_POST["username"] : "";
+            $email = isset($_POST["email"]) ? $_POST["email"] : "";
+            $password = isset($_POST["password"]) ? $_POST["password"] : "";
+
+            $userExists = $user->userExists($email);
+            if (!$userExists) {
+                $user->createUser($username, $email, $password);
+                $this->di->get("response")->redirect("login");
+            } elseif (!$username && !$email && !$password) {
+                $content["message"] = "All fields is required";
+            } else {
+                $content["message"] = "User already exists";
+            }
+        }
+
         $data = [
             "content" => $content,
-            "session" => $session,
+            "session" => $session
         ];
 
         $view->add("page/index", $data);

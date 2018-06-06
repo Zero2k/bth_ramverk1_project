@@ -16,27 +16,28 @@
                 </p>
                 </div>
                 <div class="col-lg-5">
-                <?php if (!$session->get("userId") && !$content): ?>
-                    <form>
+                <?php if (!$session->get("userId")): ?>
+                    <form method="post">
                         <div class="form-group row">
                             <label for="inputEmail3" class="col-sm-3 col-form-label">Username</label>
                             <div class="col-sm-9">
-                            <input type="text" class="form-control" id="inputEmail3" placeholder="J. Doe">
+                            <input type="text" class="form-control" name="username" placeholder="J. Doe">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="inputEmail3" class="col-sm-3 col-form-label">Email</label>
                             <div class="col-sm-9">
-                            <input type="email" class="form-control" id="inputEmail3" placeholder="you@example.com">
+                            <input type="email" class="form-control" name="email" placeholder="you@example.com">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="inputPassword3" class="col-sm-3 col-form-label">Password</label>
                             <div class="col-sm-9">
-                            <input type="password" class="form-control" id="inputPassword3" placeholder="*******">
+                            <input type="password" class="form-control" name="password" placeholder="*******">
                             </div>
                         </div>
                         <button type="submit" class="btn btn-light">Sign Up</button>
+                        <small style="padding-left: 10px"><?= $content["message"] ?></small>
                     </form>
                 <?php else: ?>
                 <div class="row">
