@@ -40,26 +40,27 @@
                         <small style="padding-left: 10px"><?= $content["message"] ?></small>
                     </form>
                 <?php else: ?>
-                <div class="row">
-                    <div class="col-lg-6 col-sm-6 order-lg-first">
-                        <img src="<?= $content["gravatar"] ?>" alt="..." class="img-thumbnail">
-                    </div>
-                    <div class="col-lg-6 col-sm-6 order-lg-last">
-                        <h4><?= $content["username"] ?></h4>
-                        <small><cite title="San Francisco, USA">San Francisco, USA <i class="glyphicon glyphicon-map-marker">
-                        </i></cite></small>
-                        <p>
-                            <i class="glyphicon glyphicon-envelope"></i><?= $content["email"] ?>
+                    <div class="row">
+                        <div class="col-lg-6 col-sm-6 order-lg-first">
+                            <img src="<?= $content["gravatar"] ?>" alt="..." class="img-thumbnail">
+                        </div>
+                        <div class="col-lg-6 col-sm-6 order-lg-last">
+                            <h4><?= $content["username"] ?></h4>
+                            <?php if ($content["city"] && $content["country"]): ?>
+                                <small><cite><?= $content["city"] ?>, <?= $content["country"] ?> <i class="fas fa-map-marker">
+                                </i></cite></small>
+                            <?php endif ?>
+                            <p>
+                            <i class="fas fa-envelope"></i> <?= $content["email"] ?>
                             <br />
-                            <i class="glyphicon glyphicon-globe"></i><a href="http://www.jquery2dotnet.com">www.jquery2dotnet.com</a>
-                            <br />
-                            <i class="glyphicon glyphicon-gift"></i>June 02, 1988</p>
-                        <!-- Split button -->
-                        <div class="btn-group">
-                            <a class="btn btn-outline-light" href="<?= $url->create("profile")?>">View Profile</a>
+                            <?php if ($content["website"]): ?>
+                                <i class="fas fa-globe"></i> <a href="<?= $content["website"] ?>"><?= $content["website"] ?></a>
+                            <?php endif ?>
+                            <div class="btn-group">
+                                <a class="btn btn-outline-light" href="<?= $url->create("profile")?>">View Profile</a>
+                            </div>
                         </div>
                     </div>
-                </div>
                 <?php endif ?>
                 </div>
             </div>

@@ -8,6 +8,7 @@ use \Anax\DI\InjectionAwareInterface;
 use \Anax\Di\InjectionAwareTrait;
 use \Vibe\User\HTMLForm\UserLoginForm;
 use \Vibe\User\HTMLForm\CreateUserForm;
+use \Vibe\User\User;
 
 /**
  * A controller class.
@@ -60,20 +61,50 @@ class UserController implements
         $view       = $this->di->get("view");
         $pageRender = $this->di->get("pageRender");
         $session    = $this->di->get("session");
+        $user = new User();
+        $user->setDb($this->di->get("database"));
+        $session    = $this->di->get("session");
 
         if (!$id && $session->get("userId")) {
-            $content = "Current user";
+            $content = $user->getUserInfo($session->get("userId"), 180);
         } elseif (!$id && !$session->get("userId")) {
             $this->di->get("response")->redirect("login");
         } else {
-            $content = "Find user with ID";
+            $content = $user->getUserInfo($id, 180);
+        }
+
+        $data = [
+            "content" => $content,
+            "session" => $session,
+        ];
+
+        $view->add("profile/view", $data);
+
+        $pageRender->renderPage(["title" => $title]);
+    }
+
+
+
+    public function viewUserSettings()
+    {
+        $title      = "Settings";
+        $view       = $this->di->get("view");
+        $pageRender = $this->di->get("pageRender");
+        $session    = $this->di->get("session");
+        $user = new User();
+        $user->setDb($this->di->get("database"));
+
+        if ($session->get("userId")) {
+            $content = $user->getUserInfo($session->get("userId"), 180);
+        } else {
+            $this->di->get("response")->redirect("login");
         }
 
         $data = [
             "content" => $content,
         ];
 
-        $view->add("profile/view", $data);
+        $view->add("profile/settings", $data);
 
         $pageRender->renderPage(["title" => $title]);
     }

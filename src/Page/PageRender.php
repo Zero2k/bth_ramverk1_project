@@ -20,7 +20,7 @@ class PageRender implements PageRenderInterface, InjectionAwareInterface
      */
     public function renderPage($data, $status = 200)
     {
-        $data["stylesheets"] = ["https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css", "css/color.css", "css/offcanvas.css", "css/style.css"];
+        $data["stylesheets"] = ["https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css", "https://use.fontawesome.com/releases/v5.0.13/css/all.css", "css/color.css", "css/offcanvas.css", "css/style.css"];
 
         $data["javascript"] = ["js/offcanvas.js"];
         

@@ -17,6 +17,12 @@ return [
             "callable" => ["userController", "viewUserProfile"],
         ],
         [
+            "info" => "User settings.",
+            "requestMethod" => "get",
+            "path" => "profile/settings",
+            "callable" => ["userController", "viewUserSettings"],
+        ],
+        [
             "info" => "Login a user.",
             "requestMethod" => "get|post",
             "path" => "login",

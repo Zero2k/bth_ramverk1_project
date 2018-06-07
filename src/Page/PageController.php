@@ -6,7 +6,6 @@ use \Anax\DI\InjectionAwareTrait;
 use \Anax\Configure\ConfigureInterface;
 use \Anax\Configure\ConfigureTrait;
 use \Vibe\User\User;
-use \Vibe\Gravatar\Gravatar;
 use \Vibe\User\HTMLForm\CreateUserHomeForm;
 
 /**
@@ -29,15 +28,11 @@ class PageController implements ConfigureInterface, InjectionAwareInterface
         $session    = $this->di->get("session");
         $user = new User();
         $user->setDb($this->di->get("database"));
-        $gravatar   = new Gravatar();
         $content = null;
 
 
         if ($session->get("userId")) {
-            $user = $user->find("id", $session->get("userId"));
-            $content["username"] = ucfirst($user->username);
-            $content["email"] = $user->email;
-            $content["gravatar"] = $gravatar->url($user->email, 180);
+            $content = $user->getUserInfo($session->get("userId"), 180);
         }
 
         if (!empty($_POST)) {

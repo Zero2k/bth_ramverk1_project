@@ -4,6 +4,7 @@ namespace Vibe\User;
 
 use \Anax\DI\DIInterface;
 use \Anax\Database\ActiveRecordModel;
+use \Vibe\Gravatar\Gravatar;
 
 /**
  * A database driven model.
@@ -24,6 +25,9 @@ class User extends ActiveRecordModel
     public $username;
     public $email;
     public $password;
+    public $country;
+    public $city;
+    public $website;
     public $created;
     public $updated;
     public $deleted;
@@ -94,5 +98,23 @@ class User extends ActiveRecordModel
         } else {
             return false;
         }
+    }
+
+
+
+    public function getUserInfo($id, $size)
+    {
+        $user = $this->find("id", $id);
+        $gravatar   = new Gravatar();
+        $content = null;
+
+        $content["username"] = ucfirst($user->username);
+        $content["email"] = $user->email;
+        $content["country"] = $user->country;
+        $content["city"] = $user->city;
+        $content["website"] = $user->website;
+        $content["gravatar"] = $gravatar->url($user->email, $size);
+
+        return $content;
     }
 }

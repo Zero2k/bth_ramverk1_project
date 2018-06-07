@@ -4,7 +4,7 @@
 ?>
 
 <nav class="navbar navbar-expand-md fixed-top navbar-dark bg-green">
-    <a class="navbar-brand navbar-font" href="#">coin<b>overflow</b></a>
+    <div class="navbar-brand navbar-font">coin<b>overflow</b></div>
     <button class="navbar-toggler p-0 border-0" type="button" data-toggle="offcanvas">
     <span class="navbar-toggler-icon"></span>
     </button>
