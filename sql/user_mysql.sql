@@ -14,7 +14,7 @@ CREATE TABLE ramverk1_User (
     `country` VARCHAR(255),
     `city` VARCHAR(255),
     `website` VARCHAR(255),
-    `description` TEXT,
+    `description` VARCHAR(150),
     `created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     `updated` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     `deleted` DATETIME,

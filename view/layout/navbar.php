@@ -14,22 +14,22 @@
         <?= $app->navbar->renderNav() ?>
     </ul>
     <?php if ($session->get("userId")): ?>
-        <span class="navbar-text">
-            You're sign in as
-        </span>
-        <ul class="navbar-nav">
+    <span class="navbar-text">
+        You're sign in as
+    </span>
+    <ul class="navbar-nav">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?= ucfirst($session->get("username")) ?></a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown01">
-                <a class="dropdown-item" href="<?= $url->create("profile")?>">View Profile</a>
-                <a class="dropdown-item" href="#">Settings</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="<?= $url->create("logout")?>">Logout</a>
+                    <a class="dropdown-item" href="<?= $url->create("profile")?>">View Profile</a>
+                    <a class="dropdown-item" href="<?= $url->create("profile/settings")?>">Settings</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="<?= $url->create("logout")?>">Logout</a>
                 </div>
             </li>
         </ul>
-        <!-- <a class="btn btn-outline-light btn-margin-left" href="<?= $url->create("logout")?>">Logout</a> -->
-    <?php else: ?>
+        <a class="btn btn-outline-light" href="<?= $url->create("logout")?>">Create Post</a>
+        <?php else: ?>
         <a class="btn btn-outline-light" href="<?= $url->create("login")?>">Login In</a>
         <a class="btn btn-outline-light btn-margin-left" href="<?= $url->create("sign-up")?>">Sign Up</a>
     <?php endif ?>

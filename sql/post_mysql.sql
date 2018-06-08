@@ -5,11 +5,11 @@ SET NAMES utf8;
 --
 -- Table Post
 --
-DROP TABLE IF EXISTS ramverk1_Topic;
-CREATE TABLE ramverk1_Topic (
+DROP TABLE IF EXISTS ramverk1_Post;
+CREATE TABLE ramverk1_Post (
     `id` INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
     `userId` INTEGER NOT NULL,
-    `threadId` INTEGER NOT NULL,
+    `coinId` INTEGER NOT NULL,
     `title` VARCHAR(100) NOT NULL,
     `text` TEXT NOT NULL,
     `votes` INTEGER DEFAULT 0,
@@ -19,11 +19,11 @@ CREATE TABLE ramverk1_Topic (
     `deleted` BOOLEAN DEFAULT 0,
     
     FOREIGN KEY (userId) REFERENCES ramverk1_User(id),
-    FOREIGN KEY (threadId) REFERENCES ramverk1_Thread(id) ON DELETE CASCADE
+    FOREIGN KEY (coinId) REFERENCES ramverk1_Coin(id) ON DELETE CASCADE
 
 ) ENGINE INNODB CHARACTER SET utf8 COLLATE utf8_swedish_ci;
 
-INSERT INTO ramverk1_Topic (id, userId, threadId, title, text)
+INSERT INTO ramverk1_Post (id, userId, coinId, title, text)
     VALUES
     (1, 1, 1, 'Learn how to trade bitcoin', 'test'),
     (2, 1, 2, 'Learn how to ethereum', 'test');

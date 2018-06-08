@@ -29,6 +29,16 @@ class UserController implements
 
 
 
+    public function init()
+    {
+        $this->user = new User();
+        $this->user->setDb($this->di->get("database"));
+
+        $this->session = $this->di->get("session");
+    }
+
+
+
     /**
      * Description.
      *
@@ -57,25 +67,22 @@ class UserController implements
 
     public function viewUserProfile($id = null)
     {
+        $this->init();
         $title      = "Profile";
         $view       = $this->di->get("view");
         $pageRender = $this->di->get("pageRender");
-        $session    = $this->di->get("session");
-        $user = new User();
-        $user->setDb($this->di->get("database"));
-        $session    = $this->di->get("session");
 
-        if (!$id && $session->get("userId")) {
-            $content = $user->getUserInfo($session->get("userId"), 180);
-        } elseif (!$id && !$session->get("userId")) {
+        if (!$id && $this->session->get("userId")) {
+            $content = $this->user->getUserInfo($this->session->get("userId"), 180);
+        } elseif (!$id && !$this->session->get("userId")) {
             $this->di->get("response")->redirect("login");
         } else {
-            $content = $user->getUserInfo($id, 180);
+            $content = $this->user->getUserInfo($id, 180);
         }
 
         $data = [
             "content" => $content,
-            "session" => $session,
+            "session" => $this->session,
         ];
 
         $view->add("profile/view", $data);
@@ -87,17 +94,57 @@ class UserController implements
 
     public function viewUserSettings()
     {
+        $this->init();
         $title      = "Settings";
         $view       = $this->di->get("view");
         $pageRender = $this->di->get("pageRender");
-        $session    = $this->di->get("session");
-        $user = new User();
-        $user->setDb($this->di->get("database"));
+        $content = null;
 
-        if ($session->get("userId")) {
-            $content = $user->getUserInfo($session->get("userId"), 180);
+        if ($this->session->get("userId")) {
+            $content = $this->user->getUserInfo($this->session->get("userId"), 180);
         } else {
             $this->di->get("response")->redirect("login");
+        }
+
+        if (!empty($_POST)) {
+            $username = isset($_POST["username"]) ? $_POST["username"] : "";
+            $email = isset($_POST["email"]) ? $_POST["email"] : "";
+            $country = isset($_POST["country"]) ? $_POST["country"] : "";
+            $city = isset($_POST["city"]) ? $_POST["city"] : "";
+            $description = isset($_POST["description"]) ? $_POST["description"] : "";
+            $website = isset($_POST["website"]) ? $_POST["website"] : "";
+
+            $newPassword = isset($_POST["newPassword"]) ? $_POST["newPassword"] : "";
+            $confirmPassword = isset($_POST["confirmPassword"]) ? $_POST["confirmPassword"] : "";
+
+            if (!$newPassword) {
+                $this->user->password = $this->user->password;
+            } else {
+                if ($newPassword !== $confirmPassword) {
+                    return false;
+                }
+                $this->user->username = $this->user->username;
+                $this->user->email = $this->user->email;
+                $this->user->country = $this->user->country;
+                $this->user->city = $this->user->city;
+                $this->user->description = $this->user->description;
+                $this->user->website = $this->user->website;
+                $this->user->password = $newPassword;
+                $this->user->setPassword($newPassword);
+            }
+
+            if ($username && $email && $country && $city && $description && $website) {
+                $this->user->username = strtolower($username);
+                $this->user->email = strtolower($email);
+                $this->user->country = $country;
+                $this->user->city = $city;
+                $this->user->description = $description;
+                $this->user->website = strtolower($website);
+            }
+
+            $this->user->save();
+
+            $this->di->get("response")->redirect("profile/settings");
         }
 
         $data = [
@@ -175,6 +222,6 @@ class UserController implements
     public function logoutUser()
     {
         $this->di->get('session')->destroy();
-        $this->di->get("response")->redirect("login");
+        $this->di->get("response")->redirect("");
     }
 }

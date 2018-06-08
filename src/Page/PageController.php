@@ -15,6 +15,14 @@ class PageController implements ConfigureInterface, InjectionAwareInterface
 {
     use InjectionAwareTrait, ConfigureTrait;
 
+    public function init()
+    {
+        $this->user = new User();
+        $this->user->setDb($this->di->get("database"));
+
+        $this->session = $this->di->get("session");
+    }
+
     /**
      * Show home page.
      *
@@ -22,17 +30,15 @@ class PageController implements ConfigureInterface, InjectionAwareInterface
      */
     public function getIndex()
     {
+        $this->init();
         $title      = "Home";
         $view       = $this->di->get("view");
         $pageRender = $this->di->get("pageRender");
-        $session    = $this->di->get("session");
-        $user = new User();
-        $user->setDb($this->di->get("database"));
         $content = null;
 
 
-        if ($session->get("userId")) {
-            $content = $user->getUserInfo($session->get("userId"), 180);
+        if ($this->session->get("userId")) {
+            $content = $this->user->getUserInfo($this->session->get("userId"), 180);
         }
 
         if (!empty($_POST)) {
@@ -40,9 +46,9 @@ class PageController implements ConfigureInterface, InjectionAwareInterface
             $email = isset($_POST["email"]) ? $_POST["email"] : "";
             $password = isset($_POST["password"]) ? $_POST["password"] : "";
 
-            $userExists = $user->userExists($email);
+            $userExists = $this->user->userExists($email);
             if (!$userExists) {
-                $user->createUser($username, $email, $password);
+                $this->user->createUser($username, $email, $password);
                 $this->di->get("response")->redirect("login");
             } elseif (!$username && !$email && !$password) {
                 $content["message"] = "All fields is required";
@@ -53,7 +59,7 @@ class PageController implements ConfigureInterface, InjectionAwareInterface
 
         $data = [
             "content" => $content,
-            "session" => $session
+            "session" => $this->session
         ];
 
         $view->add("page/index", $data);

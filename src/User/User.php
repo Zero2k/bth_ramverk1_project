@@ -27,6 +27,7 @@ class User extends ActiveRecordModel
     public $password;
     public $country;
     public $city;
+    public $description;
     public $website;
     public $created;
     public $updated;
@@ -112,6 +113,7 @@ class User extends ActiveRecordModel
         $content["email"] = $user->email;
         $content["country"] = $user->country;
         $content["city"] = $user->city;
+        $content["description"] = $user->description;
         $content["website"] = $user->website;
         $content["gravatar"] = $gravatar->url($user->email, $size);
 

@@ -18,7 +18,7 @@ return [
         ],
         [
             "info" => "User settings.",
-            "requestMethod" => "get",
+            "requestMethod" => "get|post",
             "path" => "profile/settings",
             "callable" => ["userController", "viewUserSettings"],
         ],
