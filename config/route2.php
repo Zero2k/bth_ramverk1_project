@@ -22,6 +22,11 @@ return [
             "file" => __DIR__ . "/route2/userController.php",
         ],
         [
+            // Add routes from coinController and mount on coin/
+            "mount" => null,
+            "file" => __DIR__ . "/route2/coinController.php",
+        ],
+        [
             // These are for internal error handling and exceptions
             "mount" => null,
             "file" => __DIR__ . "/route2/internal.php",

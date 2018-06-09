@@ -143,5 +143,13 @@ return [
                 return $obj;
             }
         ],
+        "coinController" => [
+            "shared" => true,
+            "callback" => function () {
+                $obj = new \Vibe\Coin\CoinController();
+                $obj->setDI($this);
+                return $obj;
+            }
+        ]
     ],
 ];
