@@ -57,4 +57,19 @@ class Coin extends ActiveRecordModel
 
         return $content;
     }
+
+
+
+    public function getTrendingCoins($limit = 5)
+    {
+        $sql = 'SELECT Coin.id, Coin.name, Coin.slug, count(Post.id) as total_posts FROM   
+        ramverk1_Coin Coin LEFT JOIN
+        ramverk1_Post Post
+        on Coin.id = Post.coinId
+        GROUP BY Coin.id
+        ORDER BY total_posts DESC
+        LIMIT ?';
+
+        return $this->findAllSql($sql, [$limit]);
+    }
 }
