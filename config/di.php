@@ -150,6 +150,14 @@ return [
                 $obj->setDI($this);
                 return $obj;
             }
-        ]
+        ],
+        "postController" => [
+            "shared" => true,
+            "callback" => function () {
+                $obj = new \Vibe\Post\PostController();
+                $obj->setDI($this);
+                return $obj;
+            }
+        ],
     ],
 ];

@@ -27,6 +27,11 @@ return [
             "file" => __DIR__ . "/route2/coinController.php",
         ],
         [
+            // Add routes from postController and mount on post/
+            "mount" => null,
+            "file" => __DIR__ . "/route2/postController.php",
+        ],
+        [
             // These are for internal error handling and exceptions
             "mount" => null,
             "file" => __DIR__ . "/route2/internal.php",

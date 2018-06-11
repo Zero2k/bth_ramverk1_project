@@ -11,7 +11,7 @@
             </p>
         </div>
     </div>
-    <div class="container">
+    <div class="container pb-20">
         <div class="card-columns">
             <?php foreach($coins as $coin): ?>
                 <div class="card">
@@ -21,7 +21,7 @@
                     </div>
                     <div class="card-footer text-muted">
                     <a href="<?= $url->create("coin/$coin->slug")?>" class="card-link">View Posts</a> | 
-                    <small style="text-align: right">10 posts</small>
+                    <small style="text-align: right"><?php echo $coin->total_posts; ?> posts</small>
                     </div>
                 </div>
             <?php endforeach; ?>

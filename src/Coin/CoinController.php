@@ -3,6 +3,7 @@
 namespace Vibe\Coin;
 
 use \Vibe\Coin\Coin;
+use \Vibe\Post\Post;
 use \Anax\Configure\ConfigureInterface;
 use \Anax\Configure\ConfigureTrait;
 use \Anax\DI\InjectionAwareInterface;
@@ -31,6 +32,9 @@ class CoinController implements
     {
         $this->coin = new Coin();
         $this->coin->setDb($this->di->get("database"));
+
+        $this->post = new Post();
+        $this->post->setDb($this->di->get("database"));
     }
 
 
@@ -52,7 +56,7 @@ class CoinController implements
         $pageRender = $this->di->get("pageRender");
 
         $data = [
-            "coins" => $this->coin->findAll(),
+            "coins" => $this->coin->getAllCoins(),
             "content" => "An index page",
         ];
 
@@ -83,7 +87,9 @@ class CoinController implements
         if (!$this->coin->coinExists($name)) {
             $this->di->get("response")->redirect("coin");
         } else {
-            $content["coin"] = $this->coin->getCoinInfo($name);
+            $coin = $this->coin->getCoinInfo($name);
+            $content["coin"] = $coin;
+            $content["posts"] = $this->post->getCoinPosts($coin["id"]);
         }
 
         $data = [

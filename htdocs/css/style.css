@@ -1,6 +1,14 @@
 /** A css file */
 @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 
+.pb-20 {
+    padding-bottom: 20px;
+}
+
+.tr-large {
+    height: 60px;
+}
+
 .btn-margin-left {
     margin-left: 5px;
 }

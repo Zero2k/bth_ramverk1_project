@@ -1,14 +1,18 @@
+<?php
+    $url = $this->di->get("url");
+?>
+
 <section id="footer">
     <div class="container">
         <div class="row text-xs-center text-sm-left text-md-left">
             <div class="col-xs-12 col-sm-4 col-md-4">
                 <h5>Pages</h5>
                 <ul class="list-unstyled quick-links">
-                    <li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>Home</a></li>
-                    <li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>Questions</a></li>
-                    <li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>Tags</a></li>
-                    <li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>Users</a></li>
-                    <li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>About</a></li>
+                    <li><a href="<?= $url->create("")?>"><i class="fa fa-angle-double-right"></i>Home</a></li>
+                    <li><a href="<?= $url->create("questions")?>"><i class="fa fa-angle-double-right"></i>Questions</a></li>
+                    <li><a href="<?= $url->create("tags")?>"><i class="fa fa-angle-double-right"></i>Tags</a></li>
+                    <li><a href="<?= $url->create("users")?>"><i class="fa fa-angle-double-right"></i>Users</a></li>
+                    <li><a href="<?= $url->create("about")?>"><i class="fa fa-angle-double-right"></i>About</a></li>
                 </ul>
             </div>
             <div class="col-xs-12 col-sm-4 col-md-4">

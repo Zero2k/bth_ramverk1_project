@@ -72,4 +72,18 @@ class Coin extends ActiveRecordModel
 
         return $this->findAllSql($sql, [$limit]);
     }
+
+
+
+    public function getAllCoins()
+    {
+        $sql = 'SELECT Coin.id, Coin.description, Coin.name, Coin.slug, count(Post.id) as total_posts FROM   
+        ramverk1_Coin Coin LEFT JOIN
+        ramverk1_Post Post
+        on Coin.id = Post.coinId
+        GROUP BY Coin.id
+        ORDER BY id ASC';
+
+        return $this->findAllSql($sql);
+    }
 }
