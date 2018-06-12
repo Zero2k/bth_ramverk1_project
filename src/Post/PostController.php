@@ -32,6 +32,8 @@ class PostController implements
     {
         $this->post = new Post();
         $this->post->setDb($this->di->get("database"));
+
+        $this->session = $this->di->get("session");
     }
 
 
@@ -48,7 +50,7 @@ class PostController implements
     public function getIndex()
     {
         $this->init();
-        $title      = "A index page";
+        $title      = "All Questions";
         $view       = $this->di->get("view");
         $pageRender = $this->di->get("pageRender");
 
@@ -66,6 +68,20 @@ class PostController implements
 
     public function getSingle($id = null)
     {
-        # code...
+        $this->init();
+        $title      = "View Question";
+        $view       = $this->di->get("view");
+        $pageRender = $this->di->get("pageRender");
+        if ($id && $this->session->get("userId")) {
+            $this->post->addPostView($id);
+        }
+
+        $data = [
+            "content" => "An index page",
+        ];
+
+        $view->add("question/viewSingle", $data);
+
+        $pageRender->renderPage(["title" => $title]);
     }
 }

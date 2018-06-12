@@ -25,6 +25,7 @@ class Post extends ActiveRecordModel
     public $coinId;
     public $title;
     public $text;
+    public $views;
     public $votes;
     public $answers;
 
@@ -32,9 +33,10 @@ class Post extends ActiveRecordModel
 
     public function getAllPosts($limit = 10)
     {
-        $sql = 'SELECT * FROM ramverk1_Post LIMIT ?';
+        $sql = 'SELECT Post.*, Coin.name, Coin.slug FROM ramverk1_Post Post LEFT JOIN ramverk1_Coin Coin on Post.coinId = Coin.id LIMIT ?';
         return $this->findAllSql($sql, [$limit]);
     }
+
 
 
     public function getCoinPosts($id)
@@ -48,5 +50,16 @@ class Post extends ActiveRecordModel
     public function getUserPosts($id)
     {
         # code...
+    }
+
+
+
+    public function addPostView($id)
+    {
+        $post = $this->find("id", $id);
+        if ($post) {
+            $this->views = $post->views + 1;
+            $this->save();
+        }
     }
 }

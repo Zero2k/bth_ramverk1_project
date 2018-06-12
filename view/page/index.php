@@ -151,10 +151,10 @@
 
                         <div class="row align-items-center pd-top">
                             <div class="col-md col-sm-6 col-6 text-center">
-                                25<br><small>votes</small>
+                            <i class="fa fa-star"></i> 25<br><small>votes</small>
                             </div>
                             <div class="col-md col-sm-6 col-6 text-center">
-                                12<br><small>answers</small>
+                            <i class="fa fa-comments-o"></i> 12<br><small>answers</small>
                             </div>
                             <div class="col-md-9">
                                 <div class="media text-muted pt-3">

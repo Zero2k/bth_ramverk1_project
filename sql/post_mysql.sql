@@ -12,6 +12,7 @@ CREATE TABLE ramverk1_Post (
     `coinId` INTEGER NOT NULL,
     `title` VARCHAR(100) NOT NULL,
     `text` TEXT NOT NULL,
+    `views` INTEGER DEFAULT 0,
     `votes` INTEGER DEFAULT 0,
     `answers` INTEGER DEFAULT 0,
     `published` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
