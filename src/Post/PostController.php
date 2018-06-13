@@ -66,7 +66,7 @@ class PostController implements
 
 
 
-    public function getSingle($id = null)
+    public function getSinglePost($id = null)
     {
         $this->init();
         $title      = "View Question";
@@ -81,6 +81,33 @@ class PostController implements
         ];
 
         $view->add("question/viewSingle", $data);
+
+        $pageRender->renderPage(["title" => $title]);
+    }
+
+
+
+    public function addPost()
+    {
+        $this->init();
+        $title      = "Add Question";
+        $view       = $this->di->get("view");
+        $pageRender = $this->di->get("pageRender");
+        $content = null;
+        
+        if ($this->session->get("userId")) {
+            $form = new PostCreateForm($this->di);
+            $form->check();
+            $content = $form->getHTML();
+        } else {
+            $this->di->get("response")->redirect("login");
+        }
+
+        $data = [
+            "content" => $content,
+        ];
+
+        $view->add("question/create", $data);
 
         $pageRender->renderPage(["title" => $title]);
     }

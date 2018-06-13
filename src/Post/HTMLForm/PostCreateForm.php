@@ -22,24 +22,48 @@ class PostCreateForm extends FormModel
         $this->form->create(
             [
                 "id" => __CLASS__,
-                "legend" => "User Login"
             ],
             [
-                "user" => [
+                "title" => [
                     "type"        => "text",
+                    "class"       => "form-control",
                     //"description" => "Here you can place a description.",
                     //"placeholder" => "Here is a placeholder",
                 ],
-                        
-                "password" => [
-                    "type"        => "password",
+
+                "coin" => [
+                    "type"        => "select",
+                    "class"       => "form-control",
+                    "options" => [
+                        "bitcoin" => "bitcoin",
+                        "ethereum" => "ethereum",
+                        "dash" => "dash",
+                        "nem" => "nem",
+                        "ripple" => "ripple"
+                    ],
+                    "value"    => "bitcoin",
+                    //"description" => "Here you can place a description.",
+                    //"placeholder" => "Here is a placeholder",
+                ],
+
+                "text" => [
+                    "type"        => "textarea",
+                    "class"       => "form-control",
+                    //"description" => "Here you can place a description.",
+                    //"placeholder" => "Here is a placeholder",
+                ],
+
+                "tags" => [
+                    "type"        => "text",
+                    "class"       => "form-control",
                     //"description" => "Here you can place a description.",
                     //"placeholder" => "Here is a placeholder",
                 ],
 
                 "submit" => [
                     "type" => "submit",
-                    "value" => "Login",
+                    "value" => "Post Question",
+                    "class" => "btn btn-primary",
                     "callback" => [$this, "callbackSubmit"]
                 ],
             ]

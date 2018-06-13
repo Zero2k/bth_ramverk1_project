@@ -14,7 +14,13 @@ return [
             "info" => "Single Post / Question.",
             "requestMethod" => "get",
             "path" => "questions/{id:digit}",
-            "callable" => ["postController", "getSingle"],
+            "callable" => ["postController", "getSinglePost"],
+        ],
+        [
+            "info" => "Add Post / Question.",
+            "requestMethod" => "get",
+            "path" => "questions/new",
+            "callable" => ["postController", "addPost"],
         ]
     ]
 ];

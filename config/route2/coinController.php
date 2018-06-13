@@ -14,7 +14,7 @@ return [
             "info" => "Single coin.",
             "requestMethod" => "get",
             "path" => "coin/{name}",
-            "callable" => ["coinController", "getSingle"],
+            "callable" => ["coinController", "getSingleCoin"],
         ],
     ]
 ];

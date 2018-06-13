@@ -28,7 +28,7 @@
                 </div>
             </li>
         </ul>
-        <a class="btn btn-outline-light" href="<?= $url->create("logout")?>">Create Post</a>
+        <a class="btn btn-outline-light" href="<?= $url->create("questions/new")?>">Add Question</a>
         <?php else: ?>
         <a class="btn btn-outline-light" href="<?= $url->create("login")?>">Login In</a>
         <a class="btn btn-outline-light btn-margin-left" href="<?= $url->create("sign-up")?>">Sign Up</a>

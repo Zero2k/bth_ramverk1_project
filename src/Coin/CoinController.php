@@ -76,7 +76,7 @@ class CoinController implements
      *
      * @return void
      */
-    public function getSingle($name = null)
+    public function getSingleCoin($name = null)
     {
         $this->init();
         $title      = "View single coin";
