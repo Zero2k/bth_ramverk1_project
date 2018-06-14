@@ -53,49 +53,15 @@
 
                         <div class="row align-items-center pd-top">
                             <div class="col-md col-sm-6 col-6 text-center">
-                                25<br><small>votes</small>
+                            <i class="fa fa-thumbs-up"></i> 25<br><small>upvoted</small>
                             </div>
                             <div class="col-md col-sm-6 col-6 text-center">
-                                12<br><small>answers</small>
+                            <i class="fa fa-comments-o"></i> 12<br><small>answers</small>
                             </div>
                             <div class="col-md-9">
                                 <div class="media text-muted pt-3">
                                     <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
                                         <strong class="d-block text-gray-dark size-16"><a href="">Question</a> in Ethereum</strong>
-                                        Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row align-items-center pd-top">
-                            <div class="col-md col-sm-6 col-6 text-center">
-                                25<br><small>votes</small>
-                            </div>
-                            <div class="col-md col-sm-6 col-6 text-center">
-                                12<br><small>answers</small>
-                            </div>
-                            <div class="col-md-9">
-                                <div class="media text-muted pt-3">
-                                    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                                        <strong class="d-block text-gray-dark size-16"><a href="">Question</a> in Bitcoin Cash</strong>
-                                        Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row align-items-center pd-top">
-                            <div class="col-md col-sm-6 col-6 text-center">
-                                25<br><small>votes</small>
-                            </div>
-                            <div class="col-md col-sm-6 col-6 text-center">
-                                12<br><small>answers</small>
-                            </div>
-                            <div class="col-md-9">
-                                <div class="media text-muted pt-3">
-                                    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                                        <strong class="d-block text-gray-dark size-16"><a href="">Question</a> in Bitcoin</strong>
                                         Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
                                     </p>
                                 </div>

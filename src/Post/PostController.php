@@ -3,6 +3,7 @@
 namespace Vibe\Post;
 
 use \Vibe\Post\Post;
+use \Vibe\Gravatar\Gravatar;
 use \Anax\Configure\ConfigureInterface;
 use \Anax\Configure\ConfigureTrait;
 use \Anax\DI\InjectionAwareInterface;
@@ -33,6 +34,7 @@ class PostController implements
         $this->post = new Post();
         $this->post->setDb($this->di->get("database"));
 
+        $this->gravatar = new Gravatar();
         $this->session = $this->di->get("session");
     }
 
@@ -72,12 +74,22 @@ class PostController implements
         $title      = "View Question";
         $view       = $this->di->get("view");
         $pageRender = $this->di->get("pageRender");
-        if ($id && $this->session->get("userId")) {
-            $this->post->addPostView($id);
+
+        if ($this->post->postExists($id)) {
+            /* ADD VIEW TO POST */
+                /* if ($id && $this->session->get("userId")) {
+                    $this->post->addPostView($id);
+                } */
+            /* ADD VIEW TO POST */
+            $content = $this->post->getPostWithUser($id);
+        } else {
+            $this->di->get("response")->redirect("questions");
         }
 
         $data = [
-            "content" => "An index page",
+            "gravatar" => $this->gravatar,
+            "session" => $this->session,
+            "content" => $content[0],
         ];
 
         $view->add("question/viewSingle", $data);

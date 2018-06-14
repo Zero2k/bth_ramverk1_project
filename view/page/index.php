@@ -88,7 +88,7 @@
 
                         <div class="row align-items-center pd-top">
                             <div class="col-md col-sm-6 col-6 text-center">
-                                25<br><small>votes</small>
+                                25<br><small>upvoted</small>
                             </div>
                             <div class="col-md col-sm-6 col-6 text-center">
                                 12<br><small>answers</small>
@@ -105,7 +105,7 @@
 
                         <div class="row align-items-center pd-top">
                             <div class="col-md col-sm-6 col-6 text-center">
-                                25<br><small>votes</small>
+                                25<br><small>upvoted</small>
                             </div>
                             <div class="col-md col-sm-6 col-6 text-center">
                                 12<br><small>answers</small>
@@ -122,7 +122,7 @@
 
                         <div class="row align-items-center pd-top">
                             <div class="col-md col-sm-6 col-6 text-center">
-                                25<br><small>votes</small>
+                                25<br><small>upvoted</small>
                             </div>
                             <div class="col-md col-sm-6 col-6 text-center">
                                 12<br><small>answers</small>
@@ -151,7 +151,7 @@
 
                         <div class="row align-items-center pd-top">
                             <div class="col-md col-sm-6 col-6 text-center">
-                            <i class="fa fa-star"></i> 25<br><small>votes</small>
+                            <i class="fa fa-thumbs-up"></i> 25<br><small>upvoted</small>
                             </div>
                             <div class="col-md col-sm-6 col-6 text-center">
                             <i class="fa fa-comments-o"></i> 12<br><small>answers</small>
@@ -168,7 +168,7 @@
 
                         <div class="row align-items-center pd-top">
                             <div class="col-md col-sm-6 col-6 text-center">
-                                25<br><small>votes</small>
+                                25<br><small>upvoted</small>
                             </div>
                             <div class="col-md col-sm-6 col-6 text-center">
                                 12<br><small>answers</small>
@@ -185,7 +185,7 @@
 
                         <div class="row align-items-center pd-top">
                             <div class="col-md col-sm-6 col-6 text-center">
-                                25<br><small>votes</small>
+                                25<br><small>upvoted</small>
                             </div>
                             <div class="col-md col-sm-6 col-6 text-center">
                                 12<br><small>answers</small>

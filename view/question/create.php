@@ -13,7 +13,11 @@
         <div class="row">
             <div class="col-lg-2"></div>
             <div class="col-lg-8 pb-20">
-                <?= $content ?>
+                <div class="card">
+                    <div class="card-body">
+                        <?= $content ?>
+                    </div>
+                </div>
             <div class="col-lg-2"></div>
         </div>
     </div>

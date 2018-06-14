@@ -47,6 +47,21 @@ class Post extends ActiveRecordModel
 
 
 
+    public function getPostWithUser($id)
+    {
+        $sql = 'SELECT Post.*, User.id, User.username, User.email FROM ramverk1_Post Post LEFT JOIN ramverk1_User User on Post.userId = User.id WHERE Post.id = ?';
+        return $this->findAllSql($sql, [$id]);
+    }
+
+
+
+    public function getPostWithComments($id)
+    {
+        # code...
+    }
+
+
+
     public function getUserPosts($id)
     {
         # code...
@@ -60,6 +75,18 @@ class Post extends ActiveRecordModel
         if ($post) {
             $this->views = $post->views + 1;
             $this->save();
+        }
+    }
+
+
+
+    public function postExists($id)
+    {
+        $post = $this->find("id", $id);
+        if ($post) {
+            return true;
+        } else {
+            return false;
         }
     }
 }
