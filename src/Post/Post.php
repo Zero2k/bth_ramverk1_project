@@ -2,6 +2,7 @@
 
 namespace Vibe\Post;
 
+use \Vibe\Coin\Coin;
 use \Anax\DI\DIInterface;
 use \Anax\Database\ActiveRecordModel;
 
@@ -33,7 +34,7 @@ class Post extends ActiveRecordModel
 
     public function getAllPosts($limit = 10)
     {
-        $sql = 'SELECT Post.*, Coin.name, Coin.slug FROM ramverk1_Post Post LEFT JOIN ramverk1_Coin Coin on Post.coinId = Coin.id LIMIT ?';
+        $sql = 'SELECT Post.*, Coin.name, Coin.slug FROM ramverk1_Post Post LEFT JOIN ramverk1_Coin Coin on Post.coinId = Coin.id ORDER BY published DESC LIMIT ?';
         return $this->findAllSql($sql, [$limit]);
     }
 
@@ -41,7 +42,7 @@ class Post extends ActiveRecordModel
 
     public function getCoinPosts($id)
     {
-        $sql = 'SELECT * FROM ramverk1_Post WHERE coinId = ?';
+        $sql = 'SELECT * FROM ramverk1_Post WHERE coinId = ? ORDER BY published DESC';
         return $this->findAllSql($sql, [$id]);
     }
 
@@ -49,7 +50,7 @@ class Post extends ActiveRecordModel
 
     public function getPostWithUser($id)
     {
-        $sql = 'SELECT Post.*, User.id, User.username, User.email FROM ramverk1_Post Post LEFT JOIN ramverk1_User User on Post.userId = User.id WHERE Post.id = ?';
+        $sql = 'SELECT Post.*, User.id as userId, User.username, User.email FROM ramverk1_Post Post LEFT JOIN ramverk1_User User on Post.userId = User.id WHERE Post.id = ?';
         return $this->findAllSql($sql, [$id]);
     }
 
@@ -64,7 +65,22 @@ class Post extends ActiveRecordModel
 
     public function getUserPosts($id)
     {
-        # code...
+        $sql = 'SELECT Post.*, Coin.name, Coin.slug FROM ramverk1_Post Post LEFT JOIN ramverk1_Coin Coin on Post.coinId = Coin.id WHERE userId = ? ORDER BY published DESC LIMIT ?';
+        return $this->findAllSql($sql, [$id, $limit = 5]);
+    }
+
+
+
+    public function createPost($userId, $coinId, $title, $text)
+    {
+        $this->userId = $userId;
+        $this->coinId = $coinId;
+        $this->title = ucfirst(strtolower($title));
+        $this->text = $text;
+        $this->views = 0;
+        $this->votes = 0;
+        $this->answers = 0;
+        $this->save();
     }
 
 

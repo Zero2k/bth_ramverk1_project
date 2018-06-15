@@ -18,7 +18,7 @@ return [
         ],
         [
             "info" => "Add Post / Question.",
-            "requestMethod" => "get",
+            "requestMethod" => "get|post",
             "path" => "questions/new",
             "callable" => ["postController", "addPost"],
         ]

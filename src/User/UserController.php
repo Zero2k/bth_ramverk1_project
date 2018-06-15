@@ -9,6 +9,7 @@ use \Anax\Di\InjectionAwareTrait;
 use \Vibe\User\HTMLForm\UserLoginForm;
 use \Vibe\User\HTMLForm\CreateUserForm;
 use \Vibe\User\User;
+use \Vibe\Post\Post;
 
 /**
  * A controller class.
@@ -33,6 +34,9 @@ class UserController implements
     {
         $this->user = new User();
         $this->user->setDb($this->di->get("database"));
+
+        $this->post = new Post();
+        $this->post->setDb($this->di->get("database"));
 
         $this->session = $this->di->get("session");
     }
@@ -74,14 +78,17 @@ class UserController implements
 
         if (!$id && $this->session->get("userId")) {
             $content = $this->user->getUserInfo($this->session->get("userId"), 180);
+            $posts = $this->post->getUserPosts($this->session->get("userId"));
         } elseif (!$id && !$this->session->get("userId")) {
             $this->di->get("response")->redirect("login");
         } else {
             $content = $this->user->getUserInfo($id, 180);
+            $posts = $this->post->getUserPosts($id);
         }
 
         $data = [
             "content" => $content,
+            "posts" => $posts,
             "session" => $this->session,
         ];
 
@@ -172,7 +179,9 @@ class UserController implements
         $title      = "Login";
         $view       = $this->di->get("view");
         $pageRender = $this->di->get("pageRender");
-        $form       = new UserLoginForm($this->di);
+        $redirect = isset($_GET['redirect']) ? 1 : 0;
+        $questionId = isset($_GET['questions']) ? $_GET['questions'] : '';
+        $form       = new UserLoginForm($this->di, $redirect, $questionId);
 
         $form->check();
 

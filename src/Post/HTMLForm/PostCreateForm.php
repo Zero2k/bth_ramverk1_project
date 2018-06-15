@@ -2,6 +2,8 @@
 
 namespace Vibe\Post\HTMLForm;
 
+use \Vibe\Post\Post;
+use \Vibe\Coin\Coin;
 use \Anax\HTMLForm\FormModel;
 use \Anax\DI\DIInterface;
 
@@ -15,9 +17,10 @@ class PostCreateForm extends FormModel
      *
      * @param Anax\DI\DIInterface $di a service container
      */
-    public function __construct(DIInterface $di)
+    public function __construct(DIInterface $di, $userId)
     {
         parent::__construct($di);
+        $coins = $this->getCoinDetails();
 
         $this->form->create(
             [
@@ -34,16 +37,8 @@ class PostCreateForm extends FormModel
                 "coin" => [
                     "type"        => "select",
                     "class"       => "form-control",
-                    "options" => [
-                        "bitcoin" => "bitcoin",
-                        "ethereum" => "ethereum",
-                        "dash" => "dash",
-                        "nem" => "nem",
-                        "ripple" => "ripple"
-                    ],
+                    "options" => $coins,
                     "value"    => "bitcoin",
-                    //"description" => "Here you can place a description.",
-                    //"placeholder" => "Here is a placeholder",
                 ],
 
                 "text" => [
@@ -72,6 +67,18 @@ class PostCreateForm extends FormModel
 
 
 
+    public function getCoinDetails()
+    {
+        $coin = new Coin();
+        $coin->setDb($this->di->get("database"));
+        $coins = ["-1" => "Select a coin..."];
+        foreach ($coin->findAll() as $obj) {
+            $coins[$obj->id] = "{$obj->name}";
+        }
+        return $coins;
+    }
+
+
     /**
      * Callback for submit-button which should return true if it could
      * carry out its work and false if something failed.
@@ -80,17 +87,18 @@ class PostCreateForm extends FormModel
      */
     public function callbackSubmit()
     {
-        $this->form->addOutput(
-            "Trying to login as: "
-            . $this->form->value("user")
-            . "<br>Password is kept a secret..."
-            //. $this->form->value("password")
-        );
+        $post = new Post();
+        $post->setDb($this->di->get("database"));
 
-        // Remember values during resubmit, useful when failing (retunr false)
-        // and asking the user to resubmit the form.
+        $userId = $userId;
+        $coinId = $this->form->value("coin");
+        $title = $this->form->value("title");
+        $text = $this->form->value("text");
+        // $post->tags = $this->form->value("tags");
+
         $this->form->rememberValues();
-
+        $post->createPost($userId, $coinId, $title, $text);
+        $this->form->addOutput("Post was created.");
         return true;
     }
 }

@@ -78,14 +78,11 @@
             </div>
         </div>
         <?php if ($session->get("userId")): ?>
-        <p id="comment">
-        <a class="btn btn-outline-primary btn-block" data-toggle="collapse" href="#addComment" role="button" aria-expanded="false" aria-controls="addComment">Add Comment</a>
-        </p>
-        <div class="collapse" id="addComment">
+        <div id="comment">
             <div class="card">
                 <div class="card-body">
                     <form>
-                        <h6>Leave a comment</h6>
+                        <h6>Leave a comment as <?= $content->username ?></h6>
                         <div class="form-group">
                             <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                         </div>
@@ -95,7 +92,7 @@
             </div>
         </div>
         <?php else: ?>
-        <a class="btn btn-outline-primary btn-block" href="<?= $url->create("login")?>" role="button">Login to Comment</a>
+        <a class="btn btn-outline-primary btn-block" href="<?= $url->create("login?redirect&questions=$content->id")?>" role="button">Login to Comment</a>
         <?php endif ?>
     </div>
 </main>

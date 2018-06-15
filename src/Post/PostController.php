@@ -108,7 +108,7 @@ class PostController implements
         $content = null;
         
         if ($this->session->get("userId")) {
-            $form = new PostCreateForm($this->di);
+            $form = new PostCreateForm($this->di, $this->session->get("userId"));
             $form->check();
             $content = $form->getHTML();
         } else {

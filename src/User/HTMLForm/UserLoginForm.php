@@ -16,7 +16,7 @@ class UserLoginForm extends FormModel
      *
      * @param Anax\DI\DIInterface $di a service container
      */
-    public function __construct(DIInterface $di)
+    public function __construct(DIInterface $di, $redirect, $id)
     {
         parent::__construct($di);
 
@@ -25,13 +25,23 @@ class UserLoginForm extends FormModel
                 "id" => __CLASS__
             ],
             [
+                "redirect" => [
+                    "type"        => "hidden",
+                    "value" => $redirect,
+                ],
+
+                "id" => [
+                    "type"        => "hidden",
+                    "value" => $id,
+                ],
+
                 "email" => [
                     "class" => "form-control",
                     "type"        => "text",
                     //"description" => "Here you can place a description.",
                     "placeholder" => "Email",
                 ],
-                        
+
                 "password" => [
                     "class" => "form-control",
                     "type"        => "password",
@@ -63,6 +73,9 @@ class UserLoginForm extends FormModel
         $email = strtolower($this->form->value("email"));
         $password = $this->form->value("password");
 
+        $redirect = $this->form->value("redirect");
+        $questionsId = $this->form->value("id");
+
         $user = new User();
         $user->setDb($this->di->get("database"));
         $res = $user->verifyPassword($email, $password);
@@ -77,8 +90,12 @@ class UserLoginForm extends FormModel
         $session->set("userId", $user->id);
         $session->set("username", $user->username);
         $session->set("userEmail", $user->email);
-        $this->di->get("response")->redirect("");
-        /* $this->form->addOutput("User " . $user->username . " logged in."); */
+        if (!$redirect) {
+            $this->di->get("response")->redirect("");
+        } else {
+            $this->di->get("response")->redirect("questions/${questionsId}");
+        }
+
         return true;
     }
 }
