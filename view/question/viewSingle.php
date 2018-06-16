@@ -5,7 +5,7 @@
 <main role="main">
     <div class="jumbotron jumbotron-fluid bg-header text-white">
         <div class="container">
-            <h2 class="display-4"><?= $content->title ?></h2>
+            <h2 class="display-4"><?= ucfirst($content->title) ?></h2>
         </div>
     </div>
     <div class="container pb-20">
@@ -14,7 +14,7 @@
                 <a href=""><img class="mx-auto rounded img-fluid" src="<?= $gravatar->url($content->email) ?>" alt="avatar"></a>
             </div>
             <div class="comment-content col-md-11 col-sm-10">
-                <h6 class="small comment-meta"><a href="<?= $url->create("profile/$content->id")?>"><?= $content->username ?></a> Yesterday, 5:03 PM</h6>
+                <h6 class="small comment-meta"><a href="<?= $url->create("profile/$content->userId")?>"><?= $content->username ?></a> Yesterday, 5:03 PM</h6>
                 <div class="comment-body">
                     <p><?= $content->text ?>
                         <br>

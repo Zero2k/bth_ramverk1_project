@@ -5,6 +5,7 @@ namespace Vibe\Post;
 use \Vibe\Coin\Coin;
 use \Anax\DI\DIInterface;
 use \Anax\Database\ActiveRecordModel;
+use \Anax\TextFilter\TextFilter;
 
 /**
  * A database driven model.
@@ -50,8 +51,25 @@ class Post extends ActiveRecordModel
 
     public function getPostWithUser($id)
     {
-        $sql = 'SELECT Post.*, User.id as userId, User.username, User.email FROM ramverk1_Post Post LEFT JOIN ramverk1_User User on Post.userId = User.id WHERE Post.id = ?';
-        return $this->findAllSql($sql, [$id]);
+        $sql = 'SELECT Post.*, User.username, User.email FROM ramverk1_Post Post LEFT JOIN ramverk1_User User on Post.userId = User.id WHERE Post.id = ?';
+        $questions = $this->findAllSql($sql, [$id]);
+
+        $questions = array_map(function ($question) {
+            $question->id = $question->id;
+            $question->userId = $question->userId;
+            $question->coinId = $question->coinId;
+            $question->title = $question->title;
+            $question->text = $this->parseContent($question->text);
+            $question->views = $question->views;
+            $question->votes = $question->votes;
+            $question->answers = $question->answers;
+            $question->published = $question->published;
+            $question->username = $question->username;
+            $question->email = $question->email;
+            return $question;
+        }, $questions);
+
+        return $questions;
     }
 
 
@@ -63,10 +81,10 @@ class Post extends ActiveRecordModel
 
 
 
-    public function getUserPosts($id)
+    public function getUserPosts($id, $limit = 5)
     {
         $sql = 'SELECT Post.*, Coin.name, Coin.slug FROM ramverk1_Post Post LEFT JOIN ramverk1_Coin Coin on Post.coinId = Coin.id WHERE userId = ? ORDER BY published DESC LIMIT ?';
-        return $this->findAllSql($sql, [$id, $limit = 5]);
+        return $this->findAllSql($sql, [$id, $limit]);
     }
 
 
@@ -75,7 +93,7 @@ class Post extends ActiveRecordModel
     {
         $this->userId = $userId;
         $this->coinId = $coinId;
-        $this->title = ucfirst(strtolower($title));
+        $this->title = strtolower($title);
         $this->text = $text;
         $this->views = 0;
         $this->votes = 0;
@@ -96,13 +114,29 @@ class Post extends ActiveRecordModel
 
 
 
-    public function postExists($id)
+    public function postExists($search, $type)
     {
-        $post = $this->find("id", $id);
+        switch ($type) {
+            case "id":
+                $post = $this->find("id", $search);
+                break;
+            case "title":
+                $post = $this->find("title", $search);
+                break;
+        }
+        
         if ($post) {
             return true;
         } else {
             return false;
         }
+    }
+
+
+
+    public function parseContent($content)
+    {
+        $textfilter = new TextFilter();
+        return $textfilter->parse($content, ["markdown", "clickable"])->text;
     }
 }

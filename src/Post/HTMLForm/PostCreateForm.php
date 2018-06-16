@@ -17,7 +17,7 @@ class PostCreateForm extends FormModel
      *
      * @param Anax\DI\DIInterface $di a service container
      */
-    public function __construct(DIInterface $di, $userId)
+    public function __construct(DIInterface $di)
     {
         parent::__construct($di);
         $coins = $this->getCoinDetails();
@@ -90,11 +90,39 @@ class PostCreateForm extends FormModel
         $post = new Post();
         $post->setDb($this->di->get("database"));
 
-        $userId = $userId;
+        $userId = $this->di->get("session")->get("userId");
         $coinId = $this->form->value("coin");
         $title = $this->form->value("title");
         $text = $this->form->value("text");
         // $post->tags = $this->form->value("tags");
+
+        // Check if title is empty
+        if (!$title) {
+            $this->form->rememberValues();
+            $this->form->addOutput("You need to have a title.");
+            return false;
+        }
+
+        // Check if coinId is empty
+        if ($coinId == "-1") {
+            $this->form->rememberValues();
+            $this->form->addOutput("You need to select a coin.");
+            return false;
+        }
+
+        // Check if text is empty
+        if (!$text) {
+            $this->form->rememberValues();
+            $this->form->addOutput("You can't submit an empty question.");
+            return false;
+        }
+
+        // Check if post with same title exists
+        if ($post->postExists($title, "title")) {
+            $this->form->rememberValues();
+            $this->form->addOutput("A post with that title already exists.");
+            return false;
+        }
 
         $this->form->rememberValues();
         $post->createPost($userId, $coinId, $title, $text);

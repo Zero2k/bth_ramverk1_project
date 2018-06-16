@@ -75,7 +75,7 @@ class PostController implements
         $view       = $this->di->get("view");
         $pageRender = $this->di->get("pageRender");
 
-        if ($this->post->postExists($id)) {
+        if ($this->post->postExists($id, "id")) {
             /* ADD VIEW TO POST */
                 /* if ($id && $this->session->get("userId")) {
                     $this->post->addPostView($id);
@@ -108,7 +108,7 @@ class PostController implements
         $content = null;
         
         if ($this->session->get("userId")) {
-            $form = new PostCreateForm($this->di, $this->session->get("userId"));
+            $form = new PostCreateForm($this->di);
             $form->check();
             $content = $form->getHTML();
         } else {

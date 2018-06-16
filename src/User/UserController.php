@@ -114,12 +114,12 @@ class UserController implements
         }
 
         if (!empty($_POST)) {
-            $username = isset($_POST["username"]) ? $_POST["username"] : "";
-            $email = isset($_POST["email"]) ? $_POST["email"] : "";
-            $country = isset($_POST["country"]) ? $_POST["country"] : "";
-            $city = isset($_POST["city"]) ? $_POST["city"] : "";
-            $description = isset($_POST["description"]) ? $_POST["description"] : "";
-            $website = isset($_POST["website"]) ? $_POST["website"] : "";
+            $username = isset($_POST["username"]) ? htmlentities($_POST["username"]) : "";
+            $email = isset($_POST["email"]) ? htmlentities($_POST["email"]) : "";
+            $country = isset($_POST["country"]) ? htmlentities($_POST["country"]) : "";
+            $city = isset($_POST["city"]) ? htmlentities($_POST["city"]) : "";
+            $description = isset($_POST["description"]) ? htmlentities($_POST["description"]) : "";
+            $website = isset($_POST["website"]) ? htmlentities($_POST["website"]) : "";
 
             $newPassword = isset($_POST["newPassword"]) ? $_POST["newPassword"] : "";
             $confirmPassword = isset($_POST["confirmPassword"]) ? $_POST["confirmPassword"] : "";
