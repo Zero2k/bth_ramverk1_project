@@ -3,6 +3,7 @@
 namespace Vibe\Post;
 
 use \Vibe\Coin\Coin;
+use \Vibe\DateFormat\DateFormat;
 use \Anax\DI\DIInterface;
 use \Anax\Database\ActiveRecordModel;
 use \Anax\TextFilter\TextFilter;
@@ -44,7 +45,22 @@ class Post extends ActiveRecordModel
     public function getCoinPosts($id)
     {
         $sql = 'SELECT * FROM ramverk1_Post WHERE coinId = ? ORDER BY published DESC';
-        return $this->findAllSql($sql, [$id]);
+        $questions = $this->findAllSql($sql, [$id]);
+
+        $questions = array_map(function ($question) {
+            $question->id = $question->id;
+            $question->userId = $question->userId;
+            $question->coinId = $question->coinId;
+            $question->title = $question->title;
+            $question->text = $question->text;
+            $question->views = $question->views;
+            $question->votes = $question->votes;
+            $question->answers = $question->answers;
+            $question->published = $this->prettyDate($question->published);
+            return $question;
+        }, $questions);
+
+        return $questions;
     }
 
 
@@ -59,11 +75,11 @@ class Post extends ActiveRecordModel
             $question->userId = $question->userId;
             $question->coinId = $question->coinId;
             $question->title = $question->title;
-            $question->text = $this->parseContent($question->text);
+            $question->text = $question->text;
             $question->views = $question->views;
             $question->votes = $question->votes;
             $question->answers = $question->answers;
-            $question->published = $question->published;
+            $question->published = $this->prettyDate($question->published);
             $question->username = $question->username;
             $question->email = $question->email;
             return $question;
@@ -94,7 +110,7 @@ class Post extends ActiveRecordModel
         $this->userId = $userId;
         $this->coinId = $coinId;
         $this->title = strtolower($title);
-        $this->text = $text;
+        $this->text = $this->parseContent($text);
         $this->views = 0;
         $this->votes = 0;
         $this->answers = 0;
@@ -138,5 +154,13 @@ class Post extends ActiveRecordModel
     {
         $textfilter = new TextFilter();
         return $textfilter->parse($content, ["markdown", "clickable"])->text;
+    }
+
+
+
+    public function prettyDate($date)
+    {
+        $dateformat = new DateFormat();
+        return $dateformat->timeElapsedString($date);
     }
 }

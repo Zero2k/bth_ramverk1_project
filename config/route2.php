@@ -32,6 +32,11 @@ return [
             "file" => __DIR__ . "/route2/postController.php",
         ],
         [
+            // Add routes from tagController and mount on tags/
+            "mount" => null,
+            "file" => __DIR__ . "/route2/tagController.php",
+        ],
+        [
             // These are for internal error handling and exceptions
             "mount" => null,
             "file" => __DIR__ . "/route2/internal.php",

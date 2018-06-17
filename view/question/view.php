@@ -29,7 +29,7 @@
                         <div class="media text-muted pt-3">
                             <p class="media-body pb-3 mb-0 small lh-125 border-bottom text-center-sm border-gray">
                                 <strong class="d-block text-gray-dark size-16"><a href="<?= $url->create("questions/$post->id")?>"><?php echo ucfirst($post->title); ?></a> in <a href="<?= $url->create("coin/$post->slug")?>"><?php echo ucfirst($post->name); ?></a></strong>
-                                <?php echo substr($post->text, 0, 200); ?>...
+                                <?php echo substr(strip_tags($post->text), 0, 200); ?>...
                             </p>
                         </div>
                     </div>

@@ -1,8 +1,10 @@
 <?php
+
 namespace Anax\Page;
 use \Anax\DI\InjectionAwareInterface;
 use \Anax\DI\InjectionAwareTrait;
 use \Vibe\Coin\Coin;
+
 /**
  * A default page rendering class.
  */

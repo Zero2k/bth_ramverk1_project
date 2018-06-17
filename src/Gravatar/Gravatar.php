@@ -1,5 +1,7 @@
 <?php
+
 namespace Vibe\Gravatar;
+
 /**
  * Gravatar class to get gravatar from user emails.
  */

@@ -159,5 +159,13 @@ return [
                 return $obj;
             }
         ],
+        "tagController" => [
+            "shared" => true,
+            "callback" => function () {
+                $obj = new \Vibe\Tag\TagController();
+                $obj->setDI($this);
+                return $obj;
+            }
+        ],
     ],
 ];

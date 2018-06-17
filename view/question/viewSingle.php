@@ -11,10 +11,10 @@
     <div class="container pb-20">
         <div class="comment mb-2 row">
             <div class="comment-avatar col-md-1 col-sm-2 text-center pr-1">
-                <a href=""><img class="mx-auto rounded img-fluid" src="<?= $gravatar->url($content->email) ?>" alt="avatar"></a>
+                <a href="<?= $url->create("profile/$content->userId")?>"><img class="mx-auto rounded img-fluid" src="<?= $gravatar->url($content->email, 128) ?>" alt="avatar"></a>
             </div>
             <div class="comment-content col-md-11 col-sm-10">
-                <h6 class="small comment-meta"><a href="<?= $url->create("profile/$content->userId")?>"><?= $content->username ?></a> Yesterday, 5:03 PM</h6>
+                <h6 class="small comment-meta"><a href="<?= $url->create("profile/$content->userId")?>"><?= $content->username ?></a> <?= $content->published ?></h6>
                 <div class="comment-body">
                     <p><?= $content->text ?>
                         <br>
@@ -30,7 +30,7 @@
         <hr>
         <div class="row">
             <div class="comments col-md-12" id="comments">
-                <h3><small class="pull-right">45 comments</small> Comments </h3>
+                <h4><small class="pull-right">45 comments</small> Comments </h4>
                 <div class="comment mb-2 row">
 
                     <div class="comment-avatar col-md-1 col-sm-2 text-center pr-1">
@@ -92,7 +92,9 @@
             </div>
         </div>
         <?php else: ?>
-        <a class="btn btn-outline-primary btn-block" href="<?= $url->create("login?redirect&questions=$content->id")?>" role="button">Login to Comment</a>
+        <div id="comment">
+            <a class="btn btn-outline-primary btn-block" href="<?= $url->create("login?redirect&questions=$content->id")?>" role="button">Login to Comment</a>
+        </div>
         <?php endif ?>
     </div>
 </main>
