@@ -4,6 +4,8 @@ namespace Vibe\Post\HTMLForm;
 
 use \Vibe\Post\Post;
 use \Vibe\Coin\Coin;
+use \Vibe\Tag\Tag;
+use \Vibe\Tag\TagQuestion;
 use \Anax\HTMLForm\FormModel;
 use \Anax\DI\DIInterface;
 
@@ -51,7 +53,7 @@ class PostCreateForm extends FormModel
                 "tags" => [
                     "type"        => "text",
                     "class"       => "form-control",
-                    //"description" => "Here you can place a description.",
+                    "description" => "Add tags by separating the words with ',' like: 'bitcoin, nem, stellar'",
                     //"placeholder" => "Here is a placeholder",
                 ],
 
@@ -90,11 +92,14 @@ class PostCreateForm extends FormModel
         $post = new Post();
         $post->setDb($this->di->get("database"));
 
+        $tag = new Tag();
+        $tag->setDb($this->di->get("database"));
+
         $userId = $this->di->get("session")->get("userId");
         $coinId = $this->form->value("coin");
         $title = $this->form->value("title");
         $text = $this->form->value("text");
-        // $post->tags = $this->form->value("tags");
+        $tags = $this->form->value("tags");
 
         // Check if title is empty
         if (!$title) {
@@ -124,9 +129,40 @@ class PostCreateForm extends FormModel
             return false;
         }
 
+        if (!empty(trim($tags))) {
+            $tags = array_map('trim', explode(',', $tags));
+            $tags = array_unique($tags);
+        }
+
         $this->form->rememberValues();
-        $post->createPost($userId, $coinId, $title, $text);
-        $this->form->addOutput("Post was created.");
+
+        $newPost = $post->createPost($userId, $coinId, $title, $text);
+        if ($newPost) {
+            if (!empty($tags)) {
+                foreach ($tags as $newTag) {
+                    $newTag = strtolower($newTag);
+                    $tag = new Tag();
+                    $tag->setDb($this->di->get("database"));
+                    $tag->find("tag", $newTag);
+
+                    if (!$tag->tag) {
+                        $tag->tag = $newTag;
+                        $tag->save();
+                    }
+
+                    $tagQuestion = new TagQuestion();
+                    $tagQuestion->setDb($this->di->get("database"));
+                    $tagQuestion->tagId = $tag->id;
+                    $tagQuestion->postId = $newPost->id;
+                    $tagQuestion->save();
+                }
+            }
+        } else {
+            $this->form->addOutput("Error with tags.");
+            return false;
+        }
+        /* $this->form->addOutput("Post was created."); */
+        $this->di->get("response")->redirect("questions");
         return true;
     }
 }

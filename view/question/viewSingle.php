@@ -6,6 +6,10 @@
     <div class="jumbotron jumbotron-fluid bg-header text-white">
         <div class="container">
             <h2 class="display-4"><?= ucfirst($content->title) ?></h2>
+            <ul class="list-inline">
+                <li class="list-inline-item">Views: <?= $content->views ?></li>
+                <li class="list-inline-item">Upvotes: <?= $content->votes ?></li>
+            </ul>
         </div>
     </div>
     <div class="container pb-20">
@@ -16,7 +20,8 @@
             <div class="comment-content col-md-11 col-sm-10">
                 <h6 class="small comment-meta"><a href="<?= $url->create("profile/$content->userId")?>"><?= $content->username ?></a> <?= $content->published ?></h6>
                 <div class="comment-body">
-                    <p><?= $content->text ?>
+                    <p>
+                        <?= $content->text ?>
                         <br>
                         <a href="#comment" class="text-right small"><i class="fa fa-comment"></i> Add Comment</a>
                         <?php if ($session->get("userId")): ?>

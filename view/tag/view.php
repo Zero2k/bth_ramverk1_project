@@ -1,3 +1,7 @@
+<?php
+    $url = $this->di->get("url");
+?>
+
 <main role="main">
     <div class="jumbotron jumbotron-fluid bg-header text-white">
         <div class="container">
@@ -12,9 +16,9 @@
     <div class="container">
         <div class="pb-20">
             <?php foreach($tags as $tag): ?>
-                <button type="button" class="btn btn-primary">
+                <a href="<?= $url->create("tags/$tag->tag")?>" type="button" class="btn btn-primary">
                     <?php echo $tag->tag; ?> <span class="badge badge-light"><?php echo $tag->total; ?></span>
-                </button>
+                </a>
             <?php endforeach; ?>
         </div>
     </div>

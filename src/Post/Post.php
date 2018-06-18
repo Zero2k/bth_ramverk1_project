@@ -36,7 +36,9 @@ class Post extends ActiveRecordModel
 
     public function getAllPosts($limit = 10)
     {
-        $sql = 'SELECT Post.*, Coin.name, Coin.slug FROM ramverk1_Post Post LEFT JOIN ramverk1_Coin Coin on Post.coinId = Coin.id ORDER BY published DESC LIMIT ?';
+        $sql = 'SELECT Post.*, Coin.name, Coin.slug FROM ramverk1_Post Post 
+        LEFT JOIN ramverk1_Coin Coin on Post.coinId = Coin.id 
+        ORDER BY published DESC LIMIT ?';
         return $this->findAllSql($sql, [$limit]);
     }
 
@@ -67,7 +69,9 @@ class Post extends ActiveRecordModel
 
     public function getPostWithUser($id)
     {
-        $sql = 'SELECT Post.*, User.username, User.email FROM ramverk1_Post Post LEFT JOIN ramverk1_User User on Post.userId = User.id WHERE Post.id = ?';
+        $sql = 'SELECT Post.*, User.username, User.email FROM ramverk1_Post Post 
+        LEFT JOIN ramverk1_User User on Post.userId = User.id 
+        WHERE Post.id = ?';
         $questions = $this->findAllSql($sql, [$id]);
 
         $questions = array_map(function ($question) {
@@ -82,6 +86,34 @@ class Post extends ActiveRecordModel
             $question->published = $this->prettyDate($question->published);
             $question->username = $question->username;
             $question->email = $question->email;
+            return $question;
+        }, $questions);
+
+        return $questions;
+    }
+
+
+
+    public function getAllPostFromTag($name, $limit = 10)
+    {
+        /* $sql = 'SELECT Post.* FROM ramverk1_Post Post LEFT JOIN ramverk1_TagQuestion TQ ON TQ.id = Post.id LEFT JOIN ramverk1_Tag Tag ON Tag.id = TQ.tagId WHERE Tag.tag = ? ORDER BY published ASC LIMIT ?'; */
+        $sql = 'SELECT Post.* FROM ramverk1_Post Post
+        LEFT JOIN ramverk1_TagQuestion TQ ON TQ.postId = Post.id
+        LEFT JOIN ramverk1_Tag Tag ON Tag.id = TQ.tagId
+        WHERE Tag.tag = ? 
+        ORDER BY published ASC LIMIT ?';
+        $questions = $this->findAllSql($sql, [$name, $limit]);
+
+        $questions = array_map(function ($question) {
+            $question->id = $question->id;
+            $question->userId = $question->userId;
+            $question->coinId = $question->coinId;
+            $question->title = $question->title;
+            $question->text = $question->text;
+            $question->views = $question->views;
+            $question->votes = $question->votes;
+            $question->answers = $question->answers;
+            $question->published = $this->prettyDate($question->published);
             return $question;
         }, $questions);
 
@@ -115,6 +147,7 @@ class Post extends ActiveRecordModel
         $this->votes = 0;
         $this->answers = 0;
         $this->save();
+        return $this;
     }
 
 

@@ -27,7 +27,23 @@ class Tag extends ActiveRecordModel
 
     public function getAllTags($limit = 10)
     {
-        $sql = 'SELECT Tag.id, Tag.tag, count(TagQ.tagId) as total FROM ramverk1_Tag Tag LEFT JOIN ramverk1_TagQuestion TagQ ON Tag.id = TagQ.tagId GROUP BY Tag.id ASC LIMIT ?';
+        $sql = 'SELECT Tag.id, Tag.tag, count(TagQ.tagId) as total FROM ramverk1_Tag Tag 
+        LEFT JOIN ramverk1_TagQuestion TagQ ON Tag.id = TagQ.tagId 
+        GROUP BY Tag.id ASC 
+        ORDER BY total DESC 
+        LIMIT ?';
         return $this->findAllSql($sql, [$limit]);
+    }
+
+
+
+    public function tagExists($name)
+    {
+        $tag = $this->find("tag", $name);
+        if ($tag) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
