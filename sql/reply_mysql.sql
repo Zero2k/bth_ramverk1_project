@@ -3,16 +3,14 @@ USE anax_project;
 SET NAMES utf8;
 
 --
--- Table Comment
+-- Table Reply
 --
-DROP TABLE IF EXISTS ramverk1_Comment;
-CREATE TABLE ramverk1_Comment
+DROP TABLE IF EXISTS ramverk1_Reply;
+CREATE TABLE ramverk1_Reply
 (
     `id` INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
     `userId` INTEGER NOT NULL,
-    `postId` INTEGER,
-    `accepted` BOOLEAN DEFAULT 0,
-    `votes` INTEGER DEFAULT 0,
+    `commentId` INTEGER,
     `text` VARCHAR(120),
     `published` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     `created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -20,11 +18,12 @@ CREATE TABLE ramverk1_Comment
     `deleted` BOOLEAN DEFAULT 0,
 
     FOREIGN KEY (userId) REFERENCES ramverk1_User(id),
-    FOREIGN KEY (postId) REFERENCES ramverk1_Post(id) ON DELETE CASCADE
+    FOREIGN KEY (commentId) REFERENCES ramverk1_Comment(id) ON DELETE CASCADE
 
 ) ENGINE INNODB CHARACTER SET utf8;
 
-INSERT INTO ramverk1_Comment (id, userId, postId, text)
+INSERT INTO ramverk1_Reply (id, userId, commentId, text)
     VALUES
-    (1, 1, 1, 'First comment in Learn how to trade Bitcoin'),
-    (2, 1, 1, 'Second comment in Learn how to trade Bitcoin');
+    (1, 1, 1, 'First reply to comment in Bitcoin'),
+    (2, 1, 1, 'Second reply to comment in Bitcoin'),
+    (3, 1, 2, 'First reply to comment in Ethereum');

@@ -5,6 +5,7 @@ namespace Vibe\Tag;
 use \Vibe\Tag\Tag;
 use \Vibe\Tag\TagQuestion;
 use \Vibe\Post\Post;
+use \Vibe\Vote\Vote;
 use \Anax\Configure\ConfigureInterface;
 use \Anax\Configure\ConfigureTrait;
 use \Anax\DI\InjectionAwareInterface;
@@ -39,6 +40,9 @@ class TagController implements
 
         $this->post = new Post();
         $this->post->setDb($this->di->get("database"));
+
+        $this->vote = new Vote();
+        $this->vote->setDb($this->di->get("database"));
     }
 
 
@@ -61,7 +65,7 @@ class TagController implements
 
         $data = [
             "content" => "An index page",
-            "tags" => $this->tag->getAllTags(),
+            "tags" => $this->tag->getAllTags()
         ];
 
         $view->add("tag/view", $data);
@@ -88,6 +92,7 @@ class TagController implements
         $data = [
             "tagName" => ucfirst($tagName),
             "tags" => $tags,
+            "upvotes" => $this->vote,
         ];
 
         $view->add("tag/viewSingle", $data);

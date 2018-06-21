@@ -53,10 +53,10 @@
                     <?php foreach($posts as $post): ?>
                         <div class="row align-items-center pd-top">
                             <div class="col-md col-sm-6 col-6 text-center">
-                            <i class="fa fa-thumbs-up"></i> <?php echo $post->votes; ?>%<br><small>upvoted</small>
+                            <i class="fa fa-thumbs-up"></i> <small><?php echo $upvotes->getUpvotes($post->id); ?>%</small><br><small>upvoted</small>
                             </div>
                             <div class="col-md col-sm-6 col-6 text-center">
-                            <i class="fa fa-comments-o"></i> <?php echo $post->answers; ?><br><small>answers</small>
+                            <i class="fa fa-comments-o"></i> <small><?php echo $post->answers; ?></small><br><small>answers</small>
                             </div>
                             <div class="col-md-9">
                                 <div class="media text-muted pt-3">

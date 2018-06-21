@@ -21,6 +21,12 @@ return [
             "requestMethod" => "get|post",
             "path" => "questions/new",
             "callable" => ["postController", "addPost"],
+        ],
+        [
+            "info" => "Edit Post / Question.",
+            "requestMethod" => "get|post",
+            "path" => "questions/edit/{id:digit}",
+            "callable" => ["postController", "editPost"],
         ]
     ]
 ];

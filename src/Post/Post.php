@@ -28,6 +28,7 @@ class Post extends ActiveRecordModel
     public $coinId;
     public $title;
     public $text;
+    public $html;
     public $views;
     public $votes;
     public $answers;
@@ -122,16 +123,12 @@ class Post extends ActiveRecordModel
 
 
 
-    public function getPostWithComments($id)
-    {
-        # code...
-    }
-
-
-
     public function getUserPosts($id, $limit = 5)
     {
-        $sql = 'SELECT Post.*, Coin.name, Coin.slug FROM ramverk1_Post Post LEFT JOIN ramverk1_Coin Coin on Post.coinId = Coin.id WHERE userId = ? ORDER BY published DESC LIMIT ?';
+        $sql = 'SELECT Post.*, Coin.name, Coin.slug FROM ramverk1_Post Post 
+        LEFT JOIN ramverk1_Coin Coin ON Post.coinId = Coin.id 
+        WHERE userId = ? 
+        ORDER BY published DESC LIMIT ?';
         return $this->findAllSql($sql, [$id, $limit]);
     }
 
@@ -142,12 +139,32 @@ class Post extends ActiveRecordModel
         $this->userId = $userId;
         $this->coinId = $coinId;
         $this->title = strtolower($title);
-        $this->text = $this->parseContent($text);
+        $this->text = $text;
+        $this->html = $this->parseContent($text);
         $this->views = 0;
         $this->votes = 0;
         $this->answers = 0;
         $this->save();
         return $this;
+    }
+
+
+
+    public function updatePost($questionId, $userId, $title, $text)
+    {
+        $this->find("id", $questionId);
+
+        $this->id = $this->id;
+        $this->userId = $userId;
+        $this->coinId = $this->coinId;
+        $this->title = strtolower($title);
+        $this->text = $text;
+        $this->html = $this->parseContent($text);
+        $this->views = $this->views;
+        $this->votes = $this->votes;
+        $this->answers = $this->answers;
+        $this->updated = date("Y-m-d H:i:s");
+        $this->update();
     }
 
 

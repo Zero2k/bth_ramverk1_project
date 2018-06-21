@@ -20,4 +20,4 @@ INSERT INTO ramverk1_TagQuestion (id, tagId, postId)
     VALUES
     (1, 1, 1),
     (2, 2, 2),
-    (3, 1, 1);
+    (3, 1, 4);

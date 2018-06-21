@@ -5,28 +5,34 @@
 <main role="main">
     <div class="jumbotron jumbotron-fluid bg-header text-white">
         <div class="container">
-            <h2 class="display-4"><?= ucfirst($content->title) ?></h2>
+            <h2 class="display-4"><?= ucfirst($post->title) ?></h2>
             <ul class="list-inline">
-                <li class="list-inline-item">Views: <?= $content->views ?></li>
-                <li class="list-inline-item">Upvotes: <?= $content->votes ?></li>
+                <li class="list-inline-item"><i class="fa fa-eye"></i> <?= $post->views ?></li>
+                <li class="list-inline-item"><i class="fa fa-thumbs-up"></i> <?= $upvotes ?>%</li>
             </ul>
         </div>
     </div>
     <div class="container pb-20">
         <div class="comment mb-2 row">
             <div class="comment-avatar col-md-1 col-sm-2 text-center pr-1">
-                <a href="<?= $url->create("profile/$content->userId")?>"><img class="mx-auto rounded img-fluid" src="<?= $gravatar->url($content->email, 128) ?>" alt="avatar"></a>
+                <a href="<?= $url->create("profile/$post->userId")?>"><img class="mx-auto rounded img-fluid" src="<?= $gravatar->url($post->email, 128) ?>" alt="avatar"></a>
             </div>
             <div class="comment-content col-md-11 col-sm-10">
-                <h6 class="small comment-meta"><a href="<?= $url->create("profile/$content->userId")?>"><?= $content->username ?></a> <?= $content->published ?></h6>
+                <h6 class="small comment-meta"><a href="<?= $url->create("profile/$post->userId")?>"><?= $post->username ?></a> <?= $post->published ?></h6>
                 <div class="comment-body">
                     <p>
-                        <?= $content->text ?>
+                        <?= $post->html ?>
+                        <?php if ($post->updated): ?>
+                        <small><i>*Question has been updated / changed on <?= $post->updated ?></i></small>
                         <br>
+                        <?php endif ?>
                         <a href="#comment" class="text-right small"><i class="fa fa-comment"></i> Add Comment</a>
                         <?php if ($session->get("userId")): ?>
-                        <a href="" class="text-right small"><i class="fa fa-thumbs-up"></i> Like</a>
-                        <a href="" class="text-right small"><i class="fa fa-thumbs-down"></i> Dislike</a>
+                        <a href="?like" class="text-right small"><i class="fa fa-thumbs-up"></i> Like</a>
+                        <a href="?dislike" class="text-right small"><i class="fa fa-thumbs-down"></i> Dislike</a>
+                        <?php endif ?>
+                        <?php if ($session->get("userId") == $post->userId): ?>
+                        <a href="<?= $url->create("questions/edit/$post->id")?>" class="pull-right small"><i class="fa fa-edit"></i> Edit Question</a>
                         <?php endif ?>
                     </p>
                 </div>
@@ -48,6 +54,8 @@
                                 <br>
                                 <?php if ($session->get("userId")): ?>
                                 <a class="text-right small" data-toggle="collapse" href="#collapseReplay" role="button" aria-expanded="false" aria-controls="collapseReplay"><i class="fa fa-reply"></i> Reply</a>
+                                <!-- <a href="?like&comment=1" class="text-right small"><i class="fa fa-thumbs-up"></i> Like</a>
+                                <a href="?dislike&comment=1" class="text-right small"><i class="fa fa-thumbs-down"></i> Dislike</a> -->
                                 <?php endif ?>
                             </p>
                         </div>
@@ -87,7 +95,7 @@
             <div class="card">
                 <div class="card-body">
                     <form>
-                        <h6>Leave a comment as <?= $content->username ?></h6>
+                        <h6>Leave a comment as <?= $post->username ?></h6>
                         <div class="form-group">
                             <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                         </div>
@@ -98,7 +106,7 @@
         </div>
         <?php else: ?>
         <div id="comment">
-            <a class="btn btn-outline-primary btn-block" href="<?= $url->create("login?redirect&questions=$content->id")?>" role="button">Login to Comment</a>
+            <a class="btn btn-outline-primary btn-block" href="<?= $url->create("login?redirect&questions=$post->id")?>" role="button">Login to Comment</a>
         </div>
         <?php endif ?>
     </div>

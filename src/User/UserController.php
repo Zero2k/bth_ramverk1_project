@@ -2,14 +2,15 @@
 
 namespace Vibe\User;
 
+use \Vibe\User\User;
+use \Vibe\Post\Post;
+use \Vibe\Vote\Vote;
 use \Anax\Configure\ConfigureInterface;
 use \Anax\Configure\ConfigureTrait;
 use \Anax\DI\InjectionAwareInterface;
 use \Anax\Di\InjectionAwareTrait;
 use \Vibe\User\HTMLForm\UserLoginForm;
 use \Vibe\User\HTMLForm\CreateUserForm;
-use \Vibe\User\User;
-use \Vibe\Post\Post;
 
 /**
  * A controller class.
@@ -37,6 +38,9 @@ class UserController implements
 
         $this->post = new Post();
         $this->post->setDb($this->di->get("database"));
+
+        $this->vote = new Vote();
+        $this->vote->setDb($this->di->get("database"));
 
         $this->session = $this->di->get("session");
     }
@@ -90,6 +94,7 @@ class UserController implements
             "content" => $content,
             "posts" => $posts,
             "session" => $this->session,
+            "upvotes" => $this->vote,
         ];
 
         $view->add("profile/view", $data);
