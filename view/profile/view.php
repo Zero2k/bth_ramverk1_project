@@ -22,20 +22,20 @@
                         <div class="col-lg-6 col-sm-6 order-lg-last">
                             <h4><?= $content["username"] ?></h4>
                             <?php if ($content["city"] && $content["country"]): ?>
-                                <small><cite><?= $content["city"] ?>, <?= $content["country"] ?>
-                                </i></cite></small>
+                                <small><cite><?= $content["city"] ?>, <?= $content["country"] ?></cite></small>
                             <?php endif ?>
+                            <br>
+                            <!-- <small>Reputation: Good</small> -->
                             <p>
-                            <i class="fas fa-envelope"></i> <?= $content["email"] ?>
-                            <br />
-                            <?php if ($content["website"]): ?>
-                                <i class="fas fa-globe"></i> <a href="<?= $content["website"] ?>"><?= $content["website"] ?></a>
-                            <?php endif ?>
-                            <?php if ($session->get("userId")): ?>
-                                <div class="btn-group">
-                                    <a class="btn btn-outline-light" href="<?= $url->create("profile/settings")?>">Change Settings</a>
-                                </div>
-                            <?php endif ?>
+                                <?php if ($content["website"]): ?>
+                                    <i class="fas fa-globe"></i> <a href="<?= $content["website"] ?>"><?= $content["website"] ?></a>
+                                <?php endif ?>
+                                <?php if ($session->get("userId") && $session->get("userId") == $content["id"]): ?>
+                                    <div class="btn-group">
+                                        <a class="btn btn-outline-light" href="<?= $url->create("profile/settings")?>">Change Settings</a>
+                                    </div>
+                                <?php endif ?>
+                            </p>
                         </div>
                     </div>
                 </div>

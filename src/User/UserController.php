@@ -5,6 +5,7 @@ namespace Vibe\User;
 use \Vibe\User\User;
 use \Vibe\Post\Post;
 use \Vibe\Vote\Vote;
+use \Vibe\Gravatar\Gravatar;
 use \Anax\Configure\ConfigureInterface;
 use \Anax\Configure\ConfigureTrait;
 use \Anax\DI\InjectionAwareInterface;
@@ -42,6 +43,8 @@ class UserController implements
         $this->vote = new Vote();
         $this->vote->setDb($this->di->get("database"));
 
+        $this->gravatar = new Gravatar();
+
         $this->session = $this->di->get("session");
     }
 
@@ -73,6 +76,15 @@ class UserController implements
 
 
 
+    /**
+     * Description.
+     *
+     * @param datatype $variable Description
+     *
+     * @throws Exception
+     *
+     * @return void
+     */
     public function viewUserProfile($id = null)
     {
         $this->init();
@@ -104,6 +116,15 @@ class UserController implements
 
 
 
+    /**
+     * Description.
+     *
+     * @param datatype $variable Description
+     *
+     * @throws Exception
+     *
+     * @return void
+     */
     public function viewUserSettings()
     {
         $this->init();
@@ -164,6 +185,35 @@ class UserController implements
         ];
 
         $view->add("profile/settings", $data);
+
+        $pageRender->renderPage(["title" => $title]);
+    }
+
+
+
+    /**
+     * Description.
+     *
+     * @param datatype $variable Description
+     *
+     * @throws Exception
+     *
+     * @return void
+     */
+    public function viewAllUsers()
+    {
+        $this->init();
+        $title      = "Users";
+        $view       = $this->di->get("view");
+        $pageRender = $this->di->get("pageRender");
+
+        $data = [
+            "content" => "content",
+            "users" => $this->user->getAllUsers(),
+            "gravatar" => $this->gravatar,
+        ];
+
+        $view->add("user/view", $data);
 
         $pageRender->renderPage(["title" => $title]);
     }

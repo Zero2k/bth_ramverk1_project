@@ -123,6 +123,15 @@ section .section-title {
     font-weight: 700;
 }
 
+@media (min-width: 1200px) {
+    .card-columns {
+        -webkit-column-count: 3;
+        column-count: 4;
+        -webkit-column-gap: 1.25rem;
+        column-gap: 1.25rem;
+    }
+}
+
 @media (max-width:767px){
 	#footer h5 {
         padding-left: 0;
