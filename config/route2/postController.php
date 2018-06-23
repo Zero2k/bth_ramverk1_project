@@ -12,7 +12,7 @@ return [
         ],
         [
             "info" => "Single Post / Question.",
-            "requestMethod" => "get",
+            "requestMethod" => "get|post",
             "path" => "questions/{id:digit}",
             "callable" => ["postController", "getSinglePost"],
         ],

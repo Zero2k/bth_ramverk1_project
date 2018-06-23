@@ -167,5 +167,13 @@ return [
                 return $obj;
             }
         ],
+        "commentController" => [
+            "shared" => true,
+            "callback" => function () {
+                $obj = new \Vibe\Comment\CommentController();
+                $obj->setDI($this);
+                return $obj;
+            }
+        ],
     ],
 ];

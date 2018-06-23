@@ -46,6 +46,8 @@
 
                     <div class="comment-avatar col-md-1 col-sm-2 text-center pr-1">
                         <a href=""><img class="mx-auto rounded img-fluid" src="http://demos.themes.guide/bodeo/assets/images/users/w102.jpg" alt="avatar"></a>
+                        </br>
+                        <small><i class="fa fa-thumbs-up"></i> 0%</small>
                     </div>
                     <div class="comment-content col-md-11 col-sm-10 pb-20">
                         <h6 class="small comment-meta"><a href="#">maslarino</a> Yesterday, 5:03 PM</h6>
@@ -54,8 +56,8 @@
                                 <br>
                                 <?php if ($session->get("userId")): ?>
                                 <a class="text-right small" data-toggle="collapse" href="#collapseReplay" role="button" aria-expanded="false" aria-controls="collapseReplay"><i class="fa fa-reply"></i> Reply</a>
-                                <!-- <a href="?like&comment=1" class="text-right small"><i class="fa fa-thumbs-up"></i> Like</a>
-                                <a href="?dislike&comment=1" class="text-right small"><i class="fa fa-thumbs-down"></i> Dislike</a> -->
+                                <a href="?like&comment=1" class="text-right small"><i class="fa fa-thumbs-up"></i> Like</a>
+                                <a href="?dislike&comment=1" class="text-right small"><i class="fa fa-thumbs-down"></i> Dislike</a>
                                 <?php endif ?>
                             </p>
                         </div>
@@ -94,19 +96,13 @@
         <div id="comment">
             <div class="card">
                 <div class="card-body">
-                    <form>
-                        <h6>Leave a comment as <?= $post->username ?></h6>
-                        <div class="form-group">
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
+                    <?= $commentForm ?>
                 </div>
             </div>
         </div>
         <?php else: ?>
         <div id="comment">
-            <a class="btn btn-outline-primary btn-block" href="<?= $url->create("login?redirect&questions=$post->id")?>" role="button">Login to Comment</a>
+            <a class="btn btn-outline-primary btn-block" href="<?= $url->create("login?redirect&questions=$post->id")?>" role="button">You must be logged in to post a comment</a>
         </div>
         <?php endif ?>
     </div>

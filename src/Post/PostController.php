@@ -4,6 +4,7 @@ namespace Vibe\Post;
 
 use \Vibe\Post\Post;
 use \Vibe\Vote\Vote;
+use \Vibe\Comment\Comment;
 use \Vibe\Gravatar\Gravatar;
 use \Anax\Configure\ConfigureInterface;
 use \Anax\Configure\ConfigureTrait;
@@ -11,6 +12,7 @@ use \Anax\DI\InjectionAwareInterface;
 use \Anax\Di\InjectionAwareTrait;
 use \Vibe\Post\HTMLForm\PostCreateForm;
 use \Vibe\Post\HTMLForm\PostUpdateForm;
+use \Vibe\Comment\HTMLForm\CommentCreateForm;
 
 /**
  * A controller class.
@@ -38,6 +40,9 @@ class PostController implements
         
         $this->vote = new Vote();
         $this->vote->setDb($this->di->get("database"));
+
+        $this->comment = new Comment();
+        $this->comment->setDb($this->di->get("database"));
 
         $this->gravatar = new Gravatar();
         $this->session = $this->di->get("session");
@@ -100,6 +105,11 @@ class PostController implements
             if ($dislike && $this->session->get("userId")) {
                 $this->vote->likePost($this->session->get("userId"), $id, -1);
             }
+
+            /* Comment Form */
+            $form = new CommentCreateForm($this->di, $this->session->get("username"), $id);
+            $form->check();
+            $commentForm = $form->getHTML();
         } else {
             $this->di->get("response")->redirect("questions");
         }
@@ -109,6 +119,7 @@ class PostController implements
             "session" => $this->session,
             "post" => $posts[0],
             "upvotes" => $upvotes,
+            "commentForm" => $commentForm,
         ];
 
         $view->add("question/viewSingle", $data);

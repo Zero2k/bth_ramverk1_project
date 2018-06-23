@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="row vertical-center" style="height: 500px">
+    <div class="row vertical-center" style="height: 600px">
         <div class="col-md-4"></div>
         <div class="col-md-4 align-self-center">
             <div class="card">
