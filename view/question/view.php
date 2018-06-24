@@ -23,7 +23,7 @@
                     <i class="fa fa-thumbs-up"></i> <?php echo $upvotes->getUpvotes($post->id); ?>%<br><small>upvoted</small>
                     </div>
                     <div class="col-md col-sm-6 col-6 text-center">
-                    <i class="fa fa-comments-o"></i> <?php echo $post->answers; ?><br><small>answers</small>
+                    <i class="fa fa-comments-o"></i> <?php echo $comment->getCommentCount($post->id); ?><br><small>answers</small>
                     </div>
                     <div class="col-md-9">
                         <div class="media text-muted pt-3">

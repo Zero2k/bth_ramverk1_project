@@ -56,7 +56,7 @@
                             <i class="fa fa-thumbs-up"></i> <small><?php echo $upvotes->getUpvotes($post->id); ?>%</small><br><small>upvoted</small>
                             </div>
                             <div class="col-md col-sm-6 col-6 text-center">
-                            <i class="fa fa-comments-o"></i> <small><?php echo $post->answers; ?></small><br><small>answers</small>
+                            <i class="fa fa-comments-o"></i> <small><?php echo $comment->getCommentCount($post->id); ?></small><br><small>answers</small>
                             </div>
                             <div class="col-md-9">
                                 <div class="media text-muted pt-3">

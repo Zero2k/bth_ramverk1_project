@@ -62,7 +62,13 @@ class CommentCreateForm extends FormModel
         $text = $this->form->value("text");
         $userId = $this->di->get("session")->get("userId");
 
-        $this->form->addOutput("Comment was created.");
-        return true;
+        if ($postId && $text && $userId) {
+            $comment = new Comment();
+            $comment->setDb($this->di->get("database"));
+
+            $comment->createComment($userId, $postId, $text);
+            $this->form->addOutput("Comment was created.");
+            return true;
+        }
     }
 }

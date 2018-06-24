@@ -26,5 +26,5 @@ CREATE TABLE ramverk1_Comment
 
 INSERT INTO ramverk1_Comment (id, userId, postId, text)
     VALUES
-    (1, 1, 1, 'First comment in Learn how to trade Bitcoin'),
-    (2, 1, 1, 'Second comment in Learn how to trade Bitcoin');
+    (1, 1, 1, '<p>First comment in Learn how to trade Bitcoin</p>'),
+    (2, 1, 1, '<p>Second comment in Learn how to trade Bitcoin</p>');

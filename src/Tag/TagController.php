@@ -5,6 +5,7 @@ namespace Vibe\Tag;
 use \Vibe\Tag\Tag;
 use \Vibe\Tag\TagQuestion;
 use \Vibe\Post\Post;
+use \Vibe\Comment\Comment;
 use \Vibe\Vote\Vote;
 use \Anax\Configure\ConfigureInterface;
 use \Anax\Configure\ConfigureTrait;
@@ -40,6 +41,9 @@ class TagController implements
 
         $this->post = new Post();
         $this->post->setDb($this->di->get("database"));
+
+        $this->comment = new Comment();
+        $this->comment->setDb($this->di->get("database"));
 
         $this->vote = new Vote();
         $this->vote->setDb($this->di->get("database"));
@@ -93,6 +97,7 @@ class TagController implements
             "tagName" => ucfirst($tagName),
             "tags" => $tags,
             "upvotes" => $this->vote,
+            "comment" => $this->comment,
         ];
 
         $view->add("tag/viewSingle", $data);

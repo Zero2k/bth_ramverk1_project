@@ -69,7 +69,7 @@ class PostController implements
         $data = [
             "questions" => $this->post->getAllPosts(),
             "upvotes" => $this->vote,
-            "content" => "An index page",
+            "comment" => $this->comment,
         ];
 
         $view->add("question/view", $data);
@@ -120,6 +120,7 @@ class PostController implements
             "post" => $posts[0],
             "upvotes" => $upvotes,
             "commentForm" => $commentForm,
+            "comments" => $this->comment->getCommentPost($id),
         ];
 
         $view->add("question/viewSingle", $data);

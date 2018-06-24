@@ -5,6 +5,7 @@ namespace Vibe\User;
 use \Vibe\User\User;
 use \Vibe\Post\Post;
 use \Vibe\Vote\Vote;
+use \Vibe\Comment\Comment;
 use \Vibe\Gravatar\Gravatar;
 use \Anax\Configure\ConfigureInterface;
 use \Anax\Configure\ConfigureTrait;
@@ -42,6 +43,9 @@ class UserController implements
 
         $this->vote = new Vote();
         $this->vote->setDb($this->di->get("database"));
+
+        $this->comment = new Comment();
+        $this->comment->setDb($this->di->get("database"));
 
         $this->gravatar = new Gravatar();
 
@@ -107,6 +111,7 @@ class UserController implements
             "posts" => $posts,
             "session" => $this->session,
             "upvotes" => $this->vote,
+            "comment" => $this->comment,
         ];
 
         $view->add("profile/view", $data);

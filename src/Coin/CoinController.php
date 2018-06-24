@@ -5,6 +5,7 @@ namespace Vibe\Coin;
 use \Vibe\Coin\Coin;
 use \Vibe\Post\Post;
 use \Vibe\Vote\Vote;
+use \Vibe\Comment\Comment;
 use \Anax\Configure\ConfigureInterface;
 use \Anax\Configure\ConfigureTrait;
 use \Anax\DI\InjectionAwareInterface;
@@ -36,6 +37,9 @@ class CoinController implements
 
         $this->post = new Post();
         $this->post->setDb($this->di->get("database"));
+
+        $this->comment = new Comment();
+        $this->comment->setDb($this->di->get("database"));
 
         $this->vote = new Vote();
         $this->vote->setDb($this->di->get("database"));
@@ -99,6 +103,7 @@ class CoinController implements
         $data = [
             "content" => $content,
             "upvotes" => $this->vote,
+            "comment" => $this->comment,
         ];
 
         $view->add("coin/viewSingle", $data);

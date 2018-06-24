@@ -28,7 +28,7 @@ CREATE TABLE ramverk1_Post (
 INSERT INTO ramverk1_Post (id, userId, coinId, title, text, html, views, votes, answers)
     VALUES
     (1, 1, 1, 'Learn how to trade bitcoin', 'test', '<p>test</p>', 0, 0, 0),
-    (2, 1, 2, 'Learn how to ethereum', 'test', '<p>test</p>', 0, 0, 0),
+    (2, 1, 2, 'Learn how to trade ethereum', 'test', '<p>test</p>', 0, 0, 0),
     (3, 1, 1, 'Is bitcoin legal in sweden?', 'test', '<p>test</p>', 0, 0, 0),
     (4, 1, 1, 'What would you do to recover lost Bitcoins?', 'test', '<p>test</p>', 0, 0, 0),
     (5, 1, 2, 'Will ethereum ever see another bull run?', 'test', '<p>test</p>', 0, 0, 0);
