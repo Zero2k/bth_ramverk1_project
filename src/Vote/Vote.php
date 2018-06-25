@@ -30,7 +30,7 @@ class Vote extends ActiveRecordModel
 
     public function likePost($userId, $postId, $value)
     {
-        if ($this->userAlreadyVoted($userId, $postId)) {
+        if ($this->userAlreadyVoted($userId, "postId", $postId)) {
             $this->userId = $userId;
             $this->postId = $postId;
             $this->commentId = null;
@@ -41,10 +41,22 @@ class Vote extends ActiveRecordModel
 
 
 
-    public function userAlreadyVoted($userId, $postId)
+    public function likeComment($userId, $commentId, $value)
     {
-        $sql = 'SELECT * FROM ramverk1_Vote WHERE userId = ? AND postId = ?;';
-        $post = $this->findAllSql($sql, [$userId, $postId]);
+        if ($this->userAlreadyVoted($userId, "commentId", $commentId)) {
+            $this->userId = $userId;
+            $this->postId = null;
+            $this->commentId = $commentId;
+            $this->vote = $value;
+            $this->save();
+        }
+    }
+
+
+    public function userAlreadyVoted($userId, $field, $id)
+    {
+        $sql = 'SELECT * FROM ramverk1_Vote WHERE userId = ? AND '.$field.' = ?;';
+        $post = $this->findAllSql($sql, [$userId, $id]);
 
         if (!$post) {
             return true;

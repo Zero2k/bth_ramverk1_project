@@ -49,9 +49,12 @@ class Comment extends ActiveRecordModel
 
 
 
-    public function getCommentPost($postId)
+    /* public function getCommentPost($postId, $sort, $order)
     {
-        $sql = 'SELECT Comment.*, User.username, User.email FROM ramverk1_Comment Comment LEFT JOIN ramverk1_User User ON Comment.userId = User.id WHERE Comment.postId = ? ORDER BY published DESC';
+        $sql = 'SELECT Comment.*, User.username, User.email FROM ramverk1_Comment Comment 
+        LEFT JOIN ramverk1_User User ON Comment.userId = User.id 
+        WHERE Comment.postId = ? 
+        ORDER BY '.$sort.' '.$order.'';
         $comments = $this->findAllSql($sql, [$postId]);
 
         $comments = array_map(function ($comment) {
@@ -61,6 +64,43 @@ class Comment extends ActiveRecordModel
             $comment->votes = $comment->votes;
             $comment->text = $comment->text;
             $comment->published = $this->prettyDate($comment->published);
+            return $comment;
+        }, $comments);
+
+        return $comments;
+    } */
+
+
+
+    public function getCommentPost($postId, $sort, $order)
+    {
+        $sql = 'SELECT 
+        Comment.*, 
+            User.username, 
+            User.email,
+            SUM(case when vote >= 0 then 1 end) as upVotes,
+            SUM(case when vote < 0 then 1 end) as downVotes,
+            COUNT(vote) as totalVotes
+        FROM ramverk1_Comment Comment 
+        LEFT JOIN ramverk1_Vote Vote ON Comment.id = Vote.commentId
+        LEFT JOIN ramverk1_User User ON Comment.userId = User.id 
+        WHERE Comment.postId = ? 
+        GROUP BY Comment.id
+        ORDER BY '.$sort.' '.$order.'';
+        $comments = $this->findAllSql($sql, [$postId]);
+
+        $comments = array_map(function ($comment) {
+            $comment->id = $comment->id;
+            $comment->userId = $comment->userId;
+            $comment->postId = $comment->postId;
+            $comment->votes = $comment->votes;
+            $comment->text = $comment->text;
+            $comment->published = $this->prettyDate($comment->published);
+            if ($comment->upVotes == null && $comment->downVotes == null && $comment->totalVotes == null) {
+                $comment->upVotes = 0;
+            } else {
+                $comment->upVotes = round($comment->upVotes / $comment->totalVotes * 100);
+            }
             return $comment;
         }, $comments);
 

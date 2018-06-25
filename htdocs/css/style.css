@@ -51,6 +51,10 @@ textarea {
     font-size: 15px;
 }
 
+#exTab2 {
+    padding-top: 15px;
+}
+
 /* Footer */
 section {
     padding: 40px 0;
@@ -129,6 +133,10 @@ section .section-title {
         column-count: 4;
         -webkit-column-gap: 1.25rem;
         column-gap: 1.25rem;
+    }
+
+    .text-center-lg {
+        text-align: center;
     }
 }
 

@@ -26,8 +26,6 @@
                                 </i></cite></small>
                             <?php endif ?>
                             <p>
-                            <i class="fas fa-envelope"></i> <?= $content["email"] ?>
-                            <br />
                             <?php if ($content["website"]): ?>
                                 <i class="fas fa-globe"></i> <a href="<?= $content["website"] ?>"><?= $content["website"] ?></a>
                             <?php endif ?>

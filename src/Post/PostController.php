@@ -45,6 +45,7 @@ class PostController implements
         $this->comment->setDb($this->di->get("database"));
 
         $this->gravatar = new Gravatar();
+
         $this->session = $this->di->get("session");
     }
 
@@ -85,6 +86,8 @@ class PostController implements
         $title      = "View Question";
         $view       = $this->di->get("view");
         $pageRender = $this->di->get("pageRender");
+        $request = $this->di->get("request");
+        $content = null;
 
         if ($this->post->postExists($id, "id")) {
             /* ADD VIEW TO POST */
@@ -97,13 +100,36 @@ class PostController implements
 
             $like = isset($_GET["like"]) ? true : false;
             $dislike = isset($_GET["dislike"]) ? true : false;
+            $comment = isset($_GET["comment"]) ? $_GET["comment"] : "";
 
-            if ($like && $this->session->get("userId")) {
+            $sortBy = isset($_GET["sort"]) ? $_GET["sort"] : 'published';
+            $order = isset($_GET["order"]) ? $_GET["order"] : 'DESC';
+
+            if ($like && empty($comment) && $this->session->get("userId")) {
                 $this->vote->likePost($this->session->get("userId"), $id, 1);
+                $this->di->get("response")->redirect("questions/$id");
+            } elseif ($like && $comment && $this->session->get("userId")) {
+                $this->vote->likeComment($this->session->get("userId"), $comment, 1);
+                $this->di->get("response")->redirect("questions/$id");
             }
 
-            if ($dislike && $this->session->get("userId")) {
+            if ($dislike && empty($comment) && $this->session->get("userId")) {
                 $this->vote->likePost($this->session->get("userId"), $id, -1);
+                $this->di->get("response")->redirect("questions/$id");
+            } elseif ($dislike && $comment && $this->session->get("userId")) {
+                $this->vote->likeComment($this->session->get("userId"), $comment, -1);
+                $this->di->get("response")->redirect("questions/$id");
+            }
+
+            if (!empty($_POST)) {
+                $commentId = isset($_POST["commentId"]) ? $_POST["commentId"] : "";
+                $text = isset($_POST["text"]) ? $_POST["text"] : "";
+
+                if ($commentId && $text) {
+                    $this->di->get("response")->redirect("questions");
+                } else {
+                    $this->session->set("flash-$commentId", "You can't submit empty reply.");
+                }
             }
 
             /* Comment Form */
@@ -120,7 +146,7 @@ class PostController implements
             "post" => $posts[0],
             "upvotes" => $upvotes,
             "commentForm" => $commentForm,
-            "comments" => $this->comment->getCommentPost($id),
+            "comments" => $this->comment->getCommentPost($id, $sortBy, $order),
         ];
 
         $view->add("question/viewSingle", $data);
