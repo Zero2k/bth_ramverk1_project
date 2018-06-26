@@ -7,7 +7,7 @@ use \Datetime;
 /* Source - https://stackoverflow.com/questions/1416697/converting-timestamp-to-time-ago-in-php-e-g-1-day-ago-2-days-ago */
 class DateFormat
 {
-    function timeElapsedString($datetime, $full = false) 
+    public function timeElapsedString($datetime, $full = false)
     {
         $now = new DateTime;
         $ago = new DateTime($datetime);
@@ -34,7 +34,7 @@ class DateFormat
         }
 
         if (!$full) {
-        $string = array_slice($string, 0, 1);
+            $string = array_slice($string, 0, 1);
         }
         return $string ? implode(', ', $string) . ' ago' : 'just now';
     }

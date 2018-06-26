@@ -1,6 +1,7 @@
 <?php
 
 namespace Anax\Page;
+
 use \Anax\DI\InjectionAwareInterface;
 use \Anax\DI\InjectionAwareTrait;
 use \Vibe\Coin\Coin;

@@ -86,8 +86,6 @@ class PostController implements
         $title      = "View Question";
         $view       = $this->di->get("view");
         $pageRender = $this->di->get("pageRender");
-        $request = $this->di->get("request");
-        $content = null;
 
         if ($this->post->postExists($id, "id")) {
             /* ADD VIEW TO POST */
@@ -101,6 +99,7 @@ class PostController implements
             $like = isset($_GET["like"]) ? true : false;
             $dislike = isset($_GET["dislike"]) ? true : false;
             $comment = isset($_GET["comment"]) ? $_GET["comment"] : "";
+            $accepted = isset($_GET["accept"]) ? $_GET["accept"] : "";
 
             $sortBy = isset($_GET["sort"]) ? $_GET["sort"] : 'published';
             $order = isset($_GET["order"]) ? $_GET["order"] : 'DESC';
@@ -118,6 +117,11 @@ class PostController implements
                 $this->di->get("response")->redirect("questions/$id");
             } elseif ($dislike && $comment && $this->session->get("userId")) {
                 $this->vote->likeComment($this->session->get("userId"), $comment, -1);
+                $this->di->get("response")->redirect("questions/$id");
+            }
+
+            if (!empty($accepted) && $posts[0]->userId == $this->session->get("userId")) {
+                $this->comment->acceptComment($id, $accepted);
                 $this->di->get("response")->redirect("questions/$id");
             }
 

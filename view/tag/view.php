@@ -15,7 +15,7 @@
     </div>
     <div class="container">
         <div class="pb-20">
-            <?php foreach($tags as $tag): ?>
+            <?php foreach ($tags as $tag) : ?>
                 <a href="<?= $url->create("tags/$tag->tag")?>" type="button" class="btn btn-primary">
                     <?php echo $tag->tag; ?> <span class="badge badge-light"><?php echo $tag->total; ?></span>
                 </a>

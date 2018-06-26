@@ -102,7 +102,7 @@ class Post extends ActiveRecordModel
         LEFT JOIN ramverk1_TagQuestion TQ ON TQ.postId = Post.id
         LEFT JOIN ramverk1_Tag Tag ON Tag.id = TQ.tagId
         WHERE Tag.tag = ? 
-        ORDER BY published ASC LIMIT ?';
+        ORDER BY published DESC LIMIT ?';
         $questions = $this->findAllSql($sql, [$name, $limit]);
 
         $questions = array_map(function ($question) {

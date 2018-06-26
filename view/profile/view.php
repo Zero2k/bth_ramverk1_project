@@ -9,7 +9,7 @@
                 <div class="col-lg-7">
                     <h1 class="display-4">About <?= $content["username"] ?></h1>
                     <p class="lead">
-                        <?php if ($content["description"]): ?>
+                        <?php if ($content["description"]) : ?>
                             <?= $content["description"] ?>
                         <?php endif ?>
                     </p>
@@ -21,16 +21,16 @@
                         </div>
                         <div class="col-lg-6 col-sm-6 order-lg-last">
                             <h4><?= $content["username"] ?></h4>
-                            <?php if ($content["city"] && $content["country"]): ?>
+                            <?php if ($content["city"] && $content["country"]) : ?>
                                 <small><cite><?= $content["city"] ?>, <?= $content["country"] ?></cite></small>
                             <?php endif ?>
                             <br>
                             <!-- <small>Reputation: Good</small> -->
                             <p>
-                                <?php if ($content["website"]): ?>
+                                <?php if ($content["website"]) : ?>
                                     <i class="fas fa-globe"></i> <a href="<?= $content["website"] ?>"><?= $content["website"] ?></a>
                                 <?php endif ?>
-                                <?php if ($session->get("userId") && $session->get("userId") == $content["id"]): ?>
+                                <?php if ($session->get("userId") && $session->get("userId") == $content["id"]) : ?>
                                     <div class="btn-group">
                                         <a class="btn btn-outline-light" href="<?= $url->create("profile/settings")?>">Change Settings</a>
                                     </div>
@@ -50,7 +50,7 @@
                         Top Questions
                     </div>
                     <div class="card-body">
-                    <?php foreach($posts as $post): ?>
+                    <?php foreach ($posts as $post) : ?>
                         <div class="row align-items-center pd-top">
                             <div class="col-md col-sm-6 col-6 text-center">
                             <i class="fa fa-thumbs-up"></i> <small><?php echo $upvotes->getUpvotes($post->id); ?>%</small><br><small>upvoted</small>
@@ -67,7 +67,7 @@
                                 </div>
                             </div>
                         </div>
-                        <?php endforeach; ?>
+                    <?php endforeach; ?>
                     </div>
                     <nav>
                         <ul class="pagination pagination-sm justify-content-center">

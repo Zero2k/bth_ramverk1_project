@@ -17,7 +17,7 @@
                 Recent Questions 
             </div>
             <div class="card-body">
-                <?php foreach($questions as $post): ?>
+                <?php foreach ($questions as $post) : ?>
                 <div class="row align-items-center pd-top">
                     <div class="col-md col-sm-6 col-6 text-center">
                     <i class="fa fa-thumbs-up"></i> <?php echo $upvotes->getUpvotes($post->id); ?>%<br><small>upvoted</small>

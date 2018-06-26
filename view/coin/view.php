@@ -13,7 +13,7 @@
     </div>
     <div class="container pb-20">
         <div class="card-columns">
-            <?php foreach($coins as $coin): ?>
+            <?php foreach ($coins as $coin) : ?>
                 <div class="card">
                     <div class="card-body">
                     <h5 class="card-title"><a href="<?= $url->create("coin/$coin->slug")?>"><?php echo ucfirst($coin->name); ?></a></h5>

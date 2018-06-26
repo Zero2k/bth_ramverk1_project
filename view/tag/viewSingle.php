@@ -17,7 +17,7 @@
                 Questions
             </div>
                 <tbody>
-                <?php foreach($tags as $post): ?>
+                <?php foreach ($tags as $post) : ?>
                     <tr class="tr-large">
                     <td class="text-center align-middle" style="width: 10%; text-align: center"><i class="fa fa-thumbs-up"></i> <?php echo $upvotes->getUpvotes($post->id); ?>%<br><small>upvoted</small></td>
                     <td class="text-center align-middle" style="width: 10%; text-align: center"><i class="fa fa-comments-o"></i> <?php echo $comment->getCommentCount($post->id); ?><br><small>answers</small></td>

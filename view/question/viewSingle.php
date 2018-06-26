@@ -22,15 +22,15 @@
                 <div class="comment-body">
                     <p>
                         <?= $post->html ?>
-                        <?php if ($post->updated): ?>
+                        <?php if ($post->updated) : ?>
                         <small><i>*Question has been updated / changed on <?= $post->updated ?></i></small>
                         <br>
                         <?php endif ?>
-                        <?php if ($session->get("userId")): ?>
+                        <?php if ($session->get("userId")) : ?>
                         <a href="?like" class="text-right small"><i class="fa fa-thumbs-up"></i> Like</a>
                         <a href="?dislike" class="text-right small"><i class="fa fa-thumbs-down"></i> Dislike</a>
                         <?php endif ?>
-                        <?php if ($session->get("userId") == $post->userId): ?>
+                        <?php if ($session->get("userId") == $post->userId) : ?>
                         <a href="<?= $url->create("questions/edit/$post->id")?>" class="pull-right small"><i class="fa fa-edit"></i> Edit Question</a>
                         <?php endif ?>
                     </p>
@@ -51,12 +51,12 @@
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Sort by</a>
                     <div class="dropdown-menu dropdown-menu-right">
                         <a class="dropdown-item" href="?sort=published&order=DESC">Published</a>
-                        <a class="dropdown-item" href="?sort=totalVotes&order=DESC">Most Votes</a>
+                        <a class="dropdown-item" href="?sort=upVotes&order=DESC">Most upVotes</a>
                 </li>
                 </ul>
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="allComments" role="tabpanel" aria-labelledby="comments-tab">
-                        <?php foreach($comments as $comment): ?>
+                        <?php foreach ($comments as $comment) : ?>
                             <div class="comment mb-2 row" id="exTab2">
                                 <div class="comment-avatar col-md-1 col-sm-2 text-center-lg pr-1">
                                     <a href="<?= $url->create("profile/$comment->userId")?>"><img class="mx-auto rounded img-fluid" src="<?= $gravatar->url($comment->email, 128) ?>" alt="avatar"></a>
@@ -68,11 +68,11 @@
                                     <div class="comment-body">
                                         <?= $comment->text ?>
                                         <div>
-                                            <?php if ($session->get("userId")): ?>
+                                            <?php if ($session->get("userId")) : ?>
                                             <a class="text-right small" data-toggle="collapse" href="#collapseReplayCommentNr<?= $comment->id ?>" role="button" aria-expanded="false" aria-controls="collapseReplayComment"><i class="fa fa-reply"></i> Reply</a>
                                             <a href="?like&comment=<?= $comment->id ?>" class="text-right small"><i class="fa fa-thumbs-up"></i> Like</a>
                                             <a href="?dislike&comment=<?= $comment->id ?>" class="text-right small"><i class="fa fa-thumbs-down"></i> Dislike</a>
-                                                <?php if ($session->get("userId") == $post->userId): ?>
+                                                <?php if ($session->get("userId") == $post->userId) : ?>
                                                     <a href="?accept=<?= $comment->id ?>" class="text-right small"><i class="fa fa-check"></i> Accept</a>
                                                 <?php endif ?>
                                             <?php endif ?>
@@ -109,7 +109,7 @@
                     </div>
                     <div class="tab-pane fade" id="addComment" role="tabpanel" aria-labelledby="comment-tab">
                         <div id="exTab2">
-                            <?php if ($session->get("userId")): ?>
+                            <?php if ($session->get("userId")) : ?>
                             <div id="comment">
                                 <div class="card">
                                     <div class="card-body">
@@ -117,7 +117,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <?php else: ?>
+                            <?php else : ?>
                             <div id="comment">
                                 <a class="btn btn-outline-primary btn-block" href="<?= $url->create("login?redirect&questions=$post->id")?>" role="button">You must be logged in to post a comment</a>
                             </div>

@@ -1,6 +1,7 @@
 <?php
 
 namespace Vibe\Navbar;
+
 use \Anax\DI\InjectionAwareInterface;
 use \Anax\DI\InjectionAwareTrait;
 use \Anax\Configure\ConfigureInterface;

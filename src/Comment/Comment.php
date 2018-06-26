@@ -49,29 +49,6 @@ class Comment extends ActiveRecordModel
 
 
 
-    /* public function getCommentPost($postId, $sort, $order)
-    {
-        $sql = 'SELECT Comment.*, User.username, User.email FROM ramverk1_Comment Comment 
-        LEFT JOIN ramverk1_User User ON Comment.userId = User.id 
-        WHERE Comment.postId = ? 
-        ORDER BY '.$sort.' '.$order.'';
-        $comments = $this->findAllSql($sql, [$postId]);
-
-        $comments = array_map(function ($comment) {
-            $comment->id = $comment->id;
-            $comment->userId = $comment->userId;
-            $comment->postId = $comment->postId;
-            $comment->votes = $comment->votes;
-            $comment->text = $comment->text;
-            $comment->published = $this->prettyDate($comment->published);
-            return $comment;
-        }, $comments);
-
-        return $comments;
-    } */
-
-
-
     public function getCommentPost($postId, $sort, $order)
     {
         $sql = 'SELECT 
@@ -107,6 +84,33 @@ class Comment extends ActiveRecordModel
         return $comments;
     }
 
+
+
+    public function acceptComment($postId, $commentId)
+    {
+        if ($this->acceptedCommentExists($postId, $commentId)) {
+            $this->find("id", $commentId);
+            if ($this->accepted == 1) {
+                $this->accepted = 0;
+            } else {
+                $this->accepted = 1;
+            }
+            $this->save();
+        }
+    }
+
+
+    public function acceptedCommentExists($postId, $commentId)
+    {
+        $sql = 'SELECT * FROM ramverk1_Comment Comment WHERE Comment.postId = ? AND Comment.accepted = 1';
+        $comments = $this->findAllSql($sql, [$postId]);
+
+        if (!$comments || $comments[0]->id == $commentId) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 
     public function getCommentCount($postId)

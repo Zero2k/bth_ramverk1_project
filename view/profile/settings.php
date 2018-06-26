@@ -9,7 +9,7 @@
                 <div class="col-lg-7">
                     <h1 class="display-4">Settings</h1>
                     <p class="lead">
-                        <?php if ($content["description"]): ?>
+                        <?php if ($content["description"]) : ?>
                             <?= $content["description"] ?>
                         <?php endif ?>
                     </p>
@@ -21,12 +21,12 @@
                         </div>
                         <div class="col-lg-6 col-sm-6 order-lg-last">
                             <h4><?= $content["username"] ?></h4>
-                            <?php if ($content["city"] && $content["country"]): ?>
+                            <?php if ($content["city"] && $content["country"]) : ?>
                                 <small><cite><?= $content["city"] ?>, <?= $content["country"] ?>
                                 </i></cite></small>
                             <?php endif ?>
                             <p>
-                            <?php if ($content["website"]): ?>
+                            <?php if ($content["website"]) : ?>
                                 <i class="fas fa-globe"></i> <a href="<?= $content["website"] ?>"><?= $content["website"] ?></a>
                             <?php endif ?>
                         </div>

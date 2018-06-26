@@ -6,7 +6,7 @@
     <div class="jumbotron jumbotron-fluid bg-header text-white">
         <div class="container">
             <div class="row">
-                <?php if (!$session->get("userId")): ?>
+                <?php if (!$session->get("userId")) : ?>
                 <div class="col-lg-7">
                     <h1 class="display-4">Learn, Share and Trade</h1>
                     <p class="lead">
@@ -40,7 +40,7 @@
                         <small style="padding-left: 10px"><?= $content["message"] ?></small>
                     </form>
                 </div>
-                <?php else: ?>
+                <?php else : ?>
                 <div class="col-lg-7">
                     <h2 class="h2">Welcome to Coin Overflow</h2>
                     <p class="lead">
@@ -57,14 +57,14 @@
                         </div>
                         <div class="col-lg-6 col-sm-6 order-lg-last">
                             <h4><?= $content["username"] ?></h4>
-                            <?php if ($content["city"] && $content["country"]): ?>
+                            <?php if ($content["city"] && $content["country"]) : ?>
                                 <small><cite><?= $content["city"] ?>, <?= $content["country"] ?>
                                 </i></cite></small>
                             <?php endif ?>
                             <p>
                             <i class="fas fa-envelope"></i> <?= $content["email"] ?>
                             <br />
-                            <?php if ($content["website"]): ?>
+                            <?php if ($content["website"]) : ?>
                                 <i class="fas fa-globe"></i> <a href="<?= $content["website"] ?>"><?= $content["website"] ?></a>
                             <?php endif ?>
                             <div class="btn-group">

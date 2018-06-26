@@ -15,7 +15,7 @@
     </div>
     <div class="container">
         <div class="card-columns pb-20">
-            <?php foreach($users as $user): ?>
+            <?php foreach ($users as $user) : ?>
                 <div class="card">
                     <img class="card-img-top" src="<?= $gravatar->url($user->email, 260) ?>" alt="Card image cap">
                     <div class="card-body">
