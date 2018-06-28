@@ -6,6 +6,7 @@ use \Anax\DI\DIInterface;
 use \Anax\Database\ActiveRecordModel;
 use \Vibe\DateFormat\DateFormat;
 use \Anax\TextFilter\TextFilter;
+use \Vibe\Comment\Reply;
 
 /**
  * A database driven model.
@@ -73,6 +74,7 @@ class Comment extends ActiveRecordModel
             $comment->votes = $comment->votes;
             $comment->text = $comment->text;
             $comment->published = $this->prettyDate($comment->published);
+            $comment->reply = $this->getReplies($comment->id);
             if ($comment->upVotes == null && $comment->downVotes == null && $comment->totalVotes == null) {
                 $comment->upVotes = 0;
             } else {
@@ -119,6 +121,29 @@ class Comment extends ActiveRecordModel
         $comments = $this->findAllSql($sql, [$postId]);
         return count($comments);
     }
+
+
+
+    public function getReplies($id)
+    {
+        $sql = 'SELECT Reply.*, User.username, User.email FROM ramverk1_Reply Reply 
+        LEFT JOIN ramverk1_User User ON Reply.userId = User.id
+        WHERE Reply.commentId = ? ORDER BY published DESC';
+        $replies = $this->findAllSql($sql, [$id]);
+
+        $replies = array_map(function ($reply) {
+            $reply->id = $reply->id;
+            $reply->userId = $reply->userId;
+            $reply->commentId = $reply->commentId;
+            $reply->published = $this->prettyDate($reply->published);
+            $reply->username = $reply->username;
+            $reply->email = $reply->email;
+            return $reply;
+        }, $replies);
+
+        return $replies;
+    }
+
 
 
     public function parseContent($content)

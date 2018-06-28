@@ -24,6 +24,6 @@ CREATE TABLE ramverk1_Reply
 
 INSERT INTO ramverk1_Reply (id, userId, commentId, text)
     VALUES
-    (1, 1, 1, 'First reply to comment in Bitcoin'),
-    (2, 1, 1, 'Second reply to comment in Bitcoin'),
-    (3, 1, 2, 'First reply to comment in Ethereum');
+    (1, 1, 1, '<p>First reply to comment in Bitcoin</p>'),
+    (2, 1, 1, '<p>Second reply to comment in Bitcoin</p>'),
+    (3, 1, 2, '<p>First reply to comment in Ethereum</p>');

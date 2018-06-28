@@ -21,15 +21,12 @@
                     <li><a href="https://github.com/mosbth/anax"><i class="fa fa-angle-double-right"></i>Anax (PHP-framework)</a></li>
                     <li><a href="https://github.com/canax"><i class="fa fa-angle-double-right"></i>Canax (Modules for Anax)</a></li>
                     <li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>CoinMarketCap (API)</a></li>
-                    <li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>Get Started</a></li>
-                    <li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>Videos</a></li>
                 </ul>
             </div>
             <div class="col-xs-12 col-sm-3 col-md-3">
                 <h5>Open Source</h5>
                 <ul class="list-unstyled quick-links font-15">
-                    <li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>Github (Project)</a></li>
-                    <li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>Github (Module)</a></li>
+                    <li><a href="https://github.com/Zero2k/bth_ramverk1_project"><i class="fa fa-angle-double-right"></i>Github (Project)</a></li>
                 </ul>
             </div>
             <div class="col-xs-12 col-sm-3 col-md-3">

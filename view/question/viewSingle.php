@@ -57,7 +57,7 @@
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="allComments" role="tabpanel" aria-labelledby="comments-tab">
                         <?php foreach ($comments as $comment) : ?>
-                            <div class="comment mb-2 row" id="exTab2">
+                            <div class="comment mb-2 row" id="comment-style">
                                 <div class="comment-avatar col-md-1 col-sm-2 text-center-lg pr-1">
                                     <a href="<?= $url->create("profile/$comment->userId")?>"><img class="mx-auto rounded img-fluid" src="<?= $gravatar->url($comment->email, 128) ?>" alt="avatar"></a>
                                     </br>
@@ -90,20 +90,21 @@
                                         </form>
                                     </div>
                                 </div>
-
-                                <!-- <div class="comment-reply col-md-11 offset-md-1 col-sm-10 offset-sm-2">
-                                    <div class="row">
-                                        <div class="comment-avatar col-md-1 col-sm-2 text-center pr-1">
-                                            <a href=""><img class="mx-auto rounded img-fluid" src="http://demos.themes.guide/bodeo/assets/images/users/m101.jpg" alt="avatar"></a>
-                                        </div>
-                                        <div class="comment-content col-md-11 col-sm-10 col-12">
-                                            <h6 class="small comment-meta"><a href="#">phildownney</a> Today, 12:31</h6>
-                                            <div class="comment-body">
-                                                <p>Really?? Consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat.</p>
+                                <div class="comment-reply col-md-11 offset-md-1 col-sm-10 offset-sm-2">
+                                    <?php foreach ($comment->reply as $reply) : ?>
+                                        <div class="row" id="reply-style">
+                                            <div class="comment-avatar col-md-1 col-sm-2 text-center pr-1">
+                                                <a href="<?= $url->create("profile/$reply->userId")?>"><img class="mx-auto rounded img-fluid" src="<?= $gravatar->url($reply->email, 60) ?>" alt="avatar"></a>
+                                            </div>
+                                            <div class="comment-content col-md-11 col-sm-10 col-12">
+                                                <h6 class="small comment-meta"><a href="<?= $url->create("profile/$reply->userId")?>"><?= $reply->username ?></a> <?= $reply->published ?></h6>
+                                                <div class="comment-body" style="font-size: 14px">
+                                                    <?= $reply->text ?>
+                                                </div>
                                             </div>
                                         </div>
+                                        <?php endforeach; ?>
                                     </div>
-                                </div> -->
                             </div>
                         <?php endforeach; ?>
                     </div>

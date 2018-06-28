@@ -4,6 +4,7 @@ namespace Vibe\Post;
 
 use \Vibe\Post\Post;
 use \Vibe\Vote\Vote;
+use \Vibe\Comment\Reply;
 use \Vibe\Comment\Comment;
 use \Vibe\Gravatar\Gravatar;
 use \Anax\Configure\ConfigureInterface;
@@ -43,6 +44,9 @@ class PostController implements
 
         $this->comment = new Comment();
         $this->comment->setDb($this->di->get("database"));
+
+        $this->reply = new Reply();
+        $this->reply->setDb($this->di->get("database"));
 
         $this->gravatar = new Gravatar();
 
@@ -129,8 +133,12 @@ class PostController implements
                 $commentId = isset($_POST["commentId"]) ? $_POST["commentId"] : "";
                 $text = isset($_POST["text"]) ? $_POST["text"] : "";
 
-                if ($commentId && $text) {
-                    $this->di->get("response")->redirect("questions");
+                if ($commentId && $text && $this->session->get("userId")) {
+                    $reply = $this->reply->createReply($this->session->get("userId"), $commentId, $text);
+                    if ($reply) {
+                        $this->session->set("flash-$commentId", "Reply was created!");
+                        $this->di->get("response")->redirect("questions/$id");
+                    }
                 } else {
                     $this->session->set("flash-$commentId", "You can't submit empty reply.");
                 }
