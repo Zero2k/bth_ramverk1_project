@@ -6,6 +6,8 @@ use \Anax\DI\InjectionAwareTrait;
 use \Anax\Configure\ConfigureInterface;
 use \Anax\Configure\ConfigureTrait;
 use \Vibe\User\User;
+use \Vibe\Post\Post;
+use \Vibe\Comment\Comment;
 use \Vibe\User\HTMLForm\CreateUserHomeForm;
 
 /**
@@ -19,6 +21,12 @@ class PageController implements ConfigureInterface, InjectionAwareInterface
     {
         $this->user = new User();
         $this->user->setDb($this->di->get("database"));
+
+        $this->post = new Post();
+        $this->post->setDb($this->di->get("database"));
+
+        $this->comment = new Comment();
+        $this->comment->setDb($this->di->get("database"));
 
         $this->session = $this->di->get("session");
     }
@@ -59,7 +67,10 @@ class PageController implements ConfigureInterface, InjectionAwareInterface
 
         $data = [
             "content" => $content,
-            "session" => $this->session
+            "session" => $this->session,
+            "recentQuestions" => $this->post->getPost($limit = 5, $sort = "published", $order = "DESC"),
+            "topQuestions" => $this->post->getPost($limit = 5, $sort = "totalVotes", $order = "DESC"),
+            "comment" => $this->comment,
         ];
 
         $view->add("page/index", $data);

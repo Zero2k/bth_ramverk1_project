@@ -1,0 +1,10 @@
+source:
+
+1. user_mysql.sql
+2. coin_mysql.sql
+3. post_mysql.sql
+4. comment_mysql.sql
+5. reply_mysql.sql
+6. tag_mysql.sql
+7. tag2question_mysql.sql
+8. vote_mysql.sql

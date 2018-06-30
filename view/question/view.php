@@ -20,7 +20,7 @@
                 <?php foreach ($questions as $post) : ?>
                 <div class="row align-items-center pd-top">
                     <div class="col-md col-sm-6 col-6 text-center">
-                    <i class="fa fa-thumbs-up"></i> <?php echo $upvotes->getUpvotes($post->id); ?>%<br><small>upvoted</small>
+                    <i class="fa fa-thumbs-up"></i> <?php echo $post->upVotes; ?>%<br><small>upvoted</small>
                     </div>
                     <div class="col-md col-sm-6 col-6 text-center">
                     <i class="fa fa-comments-o"></i> <?php echo $comment->getCommentCount($post->id); ?><br><small>answers</small>

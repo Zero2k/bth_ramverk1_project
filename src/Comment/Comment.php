@@ -52,13 +52,13 @@ class Comment extends ActiveRecordModel
 
     public function getCommentPost($postId, $sort, $order)
     {
-        $sql = 'SELECT 
-        Comment.*, 
-            User.username, 
-            User.email,
-            SUM(case when vote >= 0 then 1 end) as upVotes,
-            SUM(case when vote < 0 then 1 end) as downVotes,
-            COUNT(vote) as totalVotes
+        $sql = 'SELECT
+        Comment.*,
+        User.username,
+        User.email,
+        SUM(case when vote >= 0 then 1 end) as upVotes,
+        SUM(case when vote < 0 then 1 end) as downVotes,
+        COUNT(vote) as totalVotes
         FROM ramverk1_Comment Comment 
         LEFT JOIN ramverk1_Vote Vote ON Comment.id = Vote.commentId
         LEFT JOIN ramverk1_User User ON Comment.userId = User.id 

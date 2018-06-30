@@ -86,59 +86,27 @@
                     </div>
                     <div class="card-body">
 
-                        <div class="row align-items-center pd-top">
-                            <div class="col-md col-sm-6 col-6 text-center">
-                                25<br><small>upvoted</small>
-                            </div>
-                            <div class="col-md col-sm-6 col-6 text-center">
-                                12<br><small>answers</small>
-                            </div>
-                            <div class="col-md-9">
-                                <div class="media text-muted pt-3">
-                                    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                                        <strong class="d-block text-gray-dark size-16"><a href="">Question</a> in Bitcoin</strong>
-                                        Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-                                    </p>
+                        <?php foreach ($recentQuestions as $post) : ?>
+                            <div class="row align-items-center pd-top">
+                                <div class="col-md col-sm-6 col-6 text-center">
+                                <i class="fa fa-thumbs-up"></i> <small><?php echo $post->upVotes; ?>%<br>upvoted</small>
+                                </div>
+                                <div class="col-md col-sm-6 col-6 text-center">
+                                <i class="fa fa-comments-o"></i> <small><?php echo $comment->getCommentCount($post->id) ?><br>answers</small>
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="media text-muted pt-3">
+                                        <p class="media-body pb-3 mb-0 small lh-125 border-bottom text-center-sm border-gray">
+                                            <strong class="d-block text-gray-dark size-16"><a href="<?= $url->create("questions/$post->id")?>"><?php echo ucfirst($post->title); ?></a> in <a href="<?= $url->create("coin/$post->slug")?>"><?php echo ucfirst($post->name); ?></a></strong>
+                                            <?php echo substr(strip_tags($post->text), 0, 200); ?>...
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="row align-items-center pd-top">
-                            <div class="col-md col-sm-6 col-6 text-center">
-                                25<br><small>upvoted</small>
-                            </div>
-                            <div class="col-md col-sm-6 col-6 text-center">
-                                12<br><small>answers</small>
-                            </div>
-                            <div class="col-md-9">
-                                <div class="media text-muted pt-3">
-                                    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                                        <strong class="d-block text-gray-dark size-16"><a href="">Question</a> in Ethereum</strong>
-                                        Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row align-items-center pd-top">
-                            <div class="col-md col-sm-6 col-6 text-center">
-                                25<br><small>upvoted</small>
-                            </div>
-                            <div class="col-md col-sm-6 col-6 text-center">
-                                12<br><small>answers</small>
-                            </div>
-                            <div class="col-md-9">
-                                <div class="media text-muted pt-3">
-                                    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                                        <strong class="d-block text-gray-dark size-16"><a href="">Question</a> in Bitcoin</strong>
-                                        Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
+                        <?php endforeach; ?>
 
                         <small class="d-block text-right mt-3">
-                            <a href="#">All questions</a>
+                            <a href="<?= $url->create("questions")?>">All questions</a>
                         </small>
                     </div>
                 </div>
@@ -149,59 +117,27 @@
                     </div>
                     <div class="card-body">
 
-                        <div class="row align-items-center pd-top">
-                            <div class="col-md col-sm-6 col-6 text-center">
-                            <i class="fa fa-thumbs-up"></i> 25<br><small>upvoted</small>
-                            </div>
-                            <div class="col-md col-sm-6 col-6 text-center">
-                            <i class="fa fa-comments-o"></i> 12<br><small>answers</small>
-                            </div>
-                            <div class="col-md-9">
-                                <div class="media text-muted pt-3">
-                                    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                                        <strong class="d-block text-gray-dark size-16"><a href="">Question</a> in Ethereum</strong>
-                                        Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-                                    </p>
+                        <?php foreach ($topQuestions as $post) : ?>
+                            <div class="row align-items-center pd-top">
+                                <div class="col-md col-sm-6 col-6 text-center">
+                                <i class="fa fa-thumbs-up"></i> <small><?php echo $post->upVotes; ?>%<br>upvoted</small>
+                                </div>
+                                <div class="col-md col-sm-6 col-6 text-center">
+                                <i class="fa fa-comments-o"></i> <small><?php echo $comment->getCommentCount($post->id) ?><br>answers</small>
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="media text-muted pt-3">
+                                        <p class="media-body pb-3 mb-0 small lh-125 border-bottom text-center-sm border-gray">
+                                            <strong class="d-block text-gray-dark size-16"><a href="<?= $url->create("questions/$post->id")?>"><?php echo ucfirst($post->title); ?></a> in <a href="<?= $url->create("coin/$post->slug")?>"><?php echo ucfirst($post->name); ?></a></strong>
+                                            <?php echo substr(strip_tags($post->text), 0, 200); ?>...
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="row align-items-center pd-top">
-                            <div class="col-md col-sm-6 col-6 text-center">
-                                25<br><small>upvoted</small>
-                            </div>
-                            <div class="col-md col-sm-6 col-6 text-center">
-                                12<br><small>answers</small>
-                            </div>
-                            <div class="col-md-9">
-                                <div class="media text-muted pt-3">
-                                    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                                        <strong class="d-block text-gray-dark size-16"><a href="">Question</a> in Bitcoin Cash</strong>
-                                        Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row align-items-center pd-top">
-                            <div class="col-md col-sm-6 col-6 text-center">
-                                25<br><small>upvoted</small>
-                            </div>
-                            <div class="col-md col-sm-6 col-6 text-center">
-                                12<br><small>answers</small>
-                            </div>
-                            <div class="col-md-9">
-                                <div class="media text-muted pt-3">
-                                    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                                        <strong class="d-block text-gray-dark size-16"><a href="">Question</a> in Bitcoin</strong>
-                                        Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
+                        <?php endforeach; ?>
 
                         <small class="d-block text-right mt-3">
-                            <a href="#">All questions</a>
+                            <a href="<?= $url->create("questions")?>">All questions</a>
                         </small>
                     </div>
                 </div>

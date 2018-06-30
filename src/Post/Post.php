@@ -35,16 +35,6 @@ class Post extends ActiveRecordModel
 
 
 
-    public function getAllPosts($limit = 10)
-    {
-        $sql = 'SELECT Post.*, Coin.name, Coin.slug FROM ramverk1_Post Post 
-        LEFT JOIN ramverk1_Coin Coin on Post.coinId = Coin.id 
-        ORDER BY published DESC LIMIT ?';
-        return $this->findAllSql($sql, [$limit]);
-    }
-
-
-
     public function getCoinPosts($id)
     {
         $sql = 'SELECT * FROM ramverk1_Post WHERE coinId = ? ORDER BY published DESC';
@@ -95,9 +85,49 @@ class Post extends ActiveRecordModel
 
 
 
+    public function getPost($limit = 5, $sort = "published", $order = "DESC")
+    {
+        $sql = 'SELECT 
+            Post.*,
+            Coin.name,
+            Coin.slug,
+            SUM(case when vote >= 0 then 1 end) as upVotes,
+            SUM(case when vote < 0 then 1 end) as downVotes,
+            COUNT(vote) as totalVotes
+        FROM ramverk1_Post Post
+        LEFT JOIN ramverk1_Vote Vote ON Vote.postId = Post.id
+        LEFT JOIN ramverk1_Coin Coin on Post.coinId = Coin.id
+        GROUP BY Post.id
+        ORDER BY '.$sort.' '.$order.' LIMIT ?';
+        $questions = $this->findAllSql($sql, [$limit]);
+
+        $questions = array_map(function ($question) {
+            $question->id = $question->id;
+            $question->userId = $question->userId;
+            $question->coinId = $question->coinId;
+            $question->title = $question->title;
+            $question->text = $question->text;
+            $question->views = $question->views;
+            $question->votes = $question->votes;
+            $question->answers = $question->answers;
+            $question->published = $this->prettyDate($question->published);
+            $question->name = $question->name;
+            $question->slug = $question->slug;
+            if ($question->upVotes == null && $question->downVotes == null && $question->totalVotes == null) {
+                $question->upVotes = 0;
+            } else {
+                $question->upVotes = round($question->upVotes / $question->totalVotes * 100);
+            }
+            return $question;
+        }, $questions);
+
+        return $questions;
+    }
+
+
+
     public function getAllPostFromTag($name, $limit = 10)
     {
-        /* $sql = 'SELECT Post.* FROM ramverk1_Post Post LEFT JOIN ramverk1_TagQuestion TQ ON TQ.id = Post.id LEFT JOIN ramverk1_Tag Tag ON Tag.id = TQ.tagId WHERE Tag.tag = ? ORDER BY published ASC LIMIT ?'; */
         $sql = 'SELECT Post.* FROM ramverk1_Post Post
         LEFT JOIN ramverk1_TagQuestion TQ ON TQ.postId = Post.id
         LEFT JOIN ramverk1_Tag Tag ON Tag.id = TQ.tagId

@@ -72,8 +72,7 @@ class PostController implements
         $pageRender = $this->di->get("pageRender");
 
         $data = [
-            "questions" => $this->post->getAllPosts(),
-            "upvotes" => $this->vote,
+            "questions" => $this->post->getPost(),
             "comment" => $this->comment,
         ];
 
