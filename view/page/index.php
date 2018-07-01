@@ -179,7 +179,7 @@
                             </div>
                         </div>
                         <small class="d-block text-right mt-3">
-                            <a href="#">All users</a>
+                            <a href="<?= $url->create("users")?>">All users</a>
                         </small>
                     </div>
                 </div>
@@ -210,7 +210,7 @@
                             </div>
                         </div>
                         <small class="d-block text-right mt-3">
-                            <a href="#">All users</a>
+                            <a href="<?= $url->create("users")?>">All users</a>
                         </small>
                     </div>
                 </div>

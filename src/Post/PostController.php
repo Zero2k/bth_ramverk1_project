@@ -7,6 +7,7 @@ use \Vibe\Vote\Vote;
 use \Vibe\Comment\Reply;
 use \Vibe\Comment\Comment;
 use \Vibe\Gravatar\Gravatar;
+use \Vibe\Pagination\Pagination;
 use \Anax\Configure\ConfigureInterface;
 use \Anax\Configure\ConfigureTrait;
 use \Anax\DI\InjectionAwareInterface;
@@ -49,6 +50,7 @@ class PostController implements
         $this->reply->setDb($this->di->get("database"));
 
         $this->gravatar = new Gravatar();
+        $this->pagination = new Pagination();
 
         $this->session = $this->di->get("session");
     }
@@ -70,10 +72,21 @@ class PostController implements
         $title      = "All Questions";
         $view       = $this->di->get("view");
         $pageRender = $this->di->get("pageRender");
+        $di         = $this->di;
+
+        $limit = 5;
+        $totalPosts = count($this->post->countPosts());
+        $currentPage = isset($_GET["page"]) ? $_GET["page"] : 1;
+        $offset = ($currentPage - 1) * $limit;
+
+        $questions  = $this->post->getPost($limit, $offset);
+
+        $pagination = $this->pagination->renderPagination($totalPosts, $offset, $limit, $currentPage, $di);
 
         $data = [
-            "questions" => $this->post->getPost(),
+            "questions" => $questions,
             "comment" => $this->comment,
+            "pagination" => $pagination,
         ];
 
         $view->add("question/view", $data);

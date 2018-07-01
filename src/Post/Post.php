@@ -85,7 +85,7 @@ class Post extends ActiveRecordModel
 
 
 
-    public function getPost($limit = 5, $sort = "published", $order = "DESC")
+    public function getPost($limit = 5, $offset = 0, $sort = "published", $order = "DESC")
     {
         $sql = 'SELECT 
             Post.*,
@@ -98,8 +98,8 @@ class Post extends ActiveRecordModel
         LEFT JOIN ramverk1_Vote Vote ON Vote.postId = Post.id
         LEFT JOIN ramverk1_Coin Coin on Post.coinId = Coin.id
         GROUP BY Post.id
-        ORDER BY '.$sort.' '.$order.' LIMIT ?';
-        $questions = $this->findAllSql($sql, [$limit]);
+        ORDER BY '.$sort.' '.$order.' LIMIT ? OFFSET ?';
+        $questions = $this->findAllSql($sql, [$limit, $offset]);
 
         $questions = array_map(function ($question) {
             $question->id = $question->id;
@@ -122,6 +122,14 @@ class Post extends ActiveRecordModel
         }, $questions);
 
         return $questions;
+    }
+
+
+
+    public function countPosts()
+    {
+        $sql = 'SELECT * FROM ramverk1_Post';
+        return $this->findAllSql($sql);
     }
 
 

@@ -39,7 +39,7 @@ class PageController implements ConfigureInterface, InjectionAwareInterface
     public function getIndex()
     {
         $this->init();
-        $title      = "Home";
+        $title      = "Coin Overflow - Where Traders Learn About Cryptocurrencies";
         $view       = $this->di->get("view");
         $pageRender = $this->di->get("pageRender");
         $content = null;
@@ -68,8 +68,8 @@ class PageController implements ConfigureInterface, InjectionAwareInterface
         $data = [
             "content" => $content,
             "session" => $this->session,
-            "recentQuestions" => $this->post->getPost($limit = 5, $sort = "published", $order = "DESC"),
-            "topQuestions" => $this->post->getPost($limit = 5, $sort = "totalVotes", $order = "DESC"),
+            "recentQuestions" => $this->post->getPost($limit = 5, $offset = 0, $sort = "published", $order = "DESC"),
+            "topQuestions" => $this->post->getPost($limit = 5, $offset = 0, $sort = "totalVotes", $order = "DESC"),
             "comment" => $this->comment,
         ];
 
@@ -84,7 +84,7 @@ class PageController implements ConfigureInterface, InjectionAwareInterface
      */
     public function getAbout()
     {
-        $title      = "About";
+        $title      = "About Coin Overflow";
         $view       = $this->di->get("view");
         $pageRender = $this->di->get("pageRender");
 
