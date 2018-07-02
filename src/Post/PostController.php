@@ -74,8 +74,9 @@ class PostController implements
         $pageRender = $this->di->get("pageRender");
         $di         = $this->di;
 
+        $query = "SELECT * FROM ramverk1_Post";
         $limit = 5;
-        $totalPosts = count($this->post->countPosts());
+        $totalPosts = count($this->post->countPosts($query));
         $currentPage = isset($_GET["page"]) ? $_GET["page"] : 1;
         $offset = ($currentPage - 1) * $limit;
 

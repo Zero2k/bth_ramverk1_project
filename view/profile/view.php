@@ -71,13 +71,7 @@
                     </div>
                     <nav>
                         <ul class="pagination pagination-sm justify-content-center">
-                            <li class="page-item disabled">
-                                <a class="page-link" href="#" tabindex="-1">Previous</a>
-                            </li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                            <?php echo $pagination ?>
                         </ul>
                     </nav>
                 </div>
@@ -101,6 +95,24 @@
                         <small class="d-block text-right mt-3">
                             <a href="#">All coins</a>
                         </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card my-3">
+                    <div class="card-header text-white bg-tropical-pink">
+                        Latest Answers
+                    </div>
+                    <div class="card-body">
+                        <?php foreach ($recentComments as $comment) : ?>
+                        <div class="media pt-3">
+                            <div class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
+                                <?php echo substr($comment->html, 0, 150); ?> <small>in <?php echo $comment->name ?></small>
+                            </div>
+                        </div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
             </div>

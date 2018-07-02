@@ -146,6 +146,20 @@ class Comment extends ActiveRecordModel
 
 
 
+    public function getRecentCommentsFromUser($id)
+    {
+        $sql = 'SELECT User.username, User.id, Post.html, Post.published, Coin.name, Coin.slug FROM ramverk1_Post Post
+        LEFT JOIN ramverk1_User User ON Post.userId = User.id
+        LEFT JOIN ramverk1_Coin Coin ON Post.coinId = Coin.id
+        WHERE User.id = ?
+        ORDER BY published DESC
+        LIMIT 5';
+
+        return $this->findAllSql($sql, [$id]);
+    }
+
+
+
     public function parseContent($content)
     {
         $textfilter = new TextFilter();

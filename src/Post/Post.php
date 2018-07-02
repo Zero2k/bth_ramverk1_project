@@ -126,10 +126,9 @@ class Post extends ActiveRecordModel
 
 
 
-    public function countPosts()
+    public function countPosts($query)
     {
-        $sql = 'SELECT * FROM ramverk1_Post';
-        return $this->findAllSql($sql);
+        return $this->findAllSql($query);
     }
 
 
@@ -161,13 +160,13 @@ class Post extends ActiveRecordModel
 
 
 
-    public function getUserPosts($id, $limit = 5)
+    public function getUserPosts($id, $limit = 5, $offset = 0)
     {
         $sql = 'SELECT Post.*, Coin.name, Coin.slug FROM ramverk1_Post Post 
         LEFT JOIN ramverk1_Coin Coin ON Post.coinId = Coin.id 
         WHERE userId = ? 
-        ORDER BY published DESC LIMIT ?';
-        return $this->findAllSql($sql, [$id, $limit]);
+        ORDER BY published DESC LIMIT ? OFFSET ?';
+        return $this->findAllSql($sql, [$id, $limit, $offset]);
     }
 
 

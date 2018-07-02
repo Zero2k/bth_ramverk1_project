@@ -13,7 +13,7 @@ CREATE TABLE ramverk1_Comment
     `postId` INTEGER,
     `accepted` BOOLEAN DEFAULT 0,
     `votes` INTEGER DEFAULT 0,
-    `text` VARCHAR(120),
+    `text` TEXT,
     `published` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     `created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     `updated` DATETIME,

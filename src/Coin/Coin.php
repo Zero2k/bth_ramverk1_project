@@ -48,24 +48,16 @@ class Coin extends ActiveRecordModel
 
     public function getCoinInfo($name)
     {
-        $coin = $this->find("slug", $name);
-        $content = null;
-
-        $content["id"] = $coin->id;
-        $content["name"] = ucfirst($coin->name);
-        $content["description"] = $coin->description;
-
-        return $content;
+        return $this->find("slug", $name);
     }
 
 
 
     public function getTrendingCoins($limit = 5)
     {
-        $sql = 'SELECT Coin.id, Coin.name, Coin.slug, count(Post.id) as total_posts FROM 
-        ramverk1_Coin Coin LEFT JOIN 
-        ramverk1_Post Post 
-        on Coin.id = Post.coinId 
+        $sql = 'SELECT Coin.id, Coin.name, Coin.slug, count(Post.id) as total_posts 
+        FROM ramverk1_Coin Coin
+        LEFT JOIN ramverk1_Post Post ON Coin.id = Post.coinId 
         GROUP BY Coin.id 
         ORDER BY total_posts DESC 
         LIMIT ?';
@@ -77,10 +69,9 @@ class Coin extends ActiveRecordModel
 
     public function getAllCoins()
     {
-        $sql = 'SELECT Coin.id, Coin.description, Coin.name, Coin.slug, count(Post.id) as total_posts FROM 
-        ramverk1_Coin Coin LEFT JOIN 
-        ramverk1_Post Post 
-        on Coin.id = Post.coinId 
+        $sql = 'SELECT Coin.id, Coin.description, Coin.name, Coin.slug, count(Post.id) as total_posts 
+        FROM ramverk1_Coin Coin 
+        LEFT JOIN ramverk1_Post Post ON Coin.id = Post.coinId 
         GROUP BY Coin.id 
         ORDER BY id ASC';
 

@@ -7,6 +7,7 @@ use \Vibe\Post\Post;
 use \Vibe\Vote\Vote;
 use \Vibe\Comment\Comment;
 use \Vibe\Gravatar\Gravatar;
+use \Vibe\Pagination\Pagination;
 use \Anax\Configure\ConfigureInterface;
 use \Anax\Configure\ConfigureTrait;
 use \Anax\DI\InjectionAwareInterface;
@@ -48,6 +49,7 @@ class UserController implements
         $this->comment->setDb($this->di->get("database"));
 
         $this->gravatar = new Gravatar();
+        $this->pagination = new Pagination();
 
         $this->session = $this->di->get("session");
     }
@@ -95,15 +97,33 @@ class UserController implements
         $title      = "Profile";
         $view       = $this->di->get("view");
         $pageRender = $this->di->get("pageRender");
+        $di         = $this->di;
 
         if (!$id && $this->session->get("userId")) {
-            $content = $this->user->getUserInfo($this->session->get("userId"), 180);
-            $posts = $this->post->getUserPosts($this->session->get("userId"));
+            $userId = $this->session->get("userId");
+
+            $query = "SELECT * FROM ramverk1_Post WHERE userId = $userId";
+            $limit = 5;
+            $totalPosts = count($this->post->countPosts($query));
+            $currentPage = isset($_GET["page"]) ? $_GET["page"] : 1;
+            $offset = ($currentPage - 1) * $limit;
+            $pagination = $this->pagination->renderPagination($totalPosts, $offset, $limit, $currentPage, $di);
+            
+            $content = $this->user->getUserInfo($userId, 180);
+            $posts = $this->post->getUserPosts($this->session->get("userId"), $limit, $offset);
         } elseif (!$id && !$this->session->get("userId")) {
             $this->di->get("response")->redirect("login");
         } else {
+            $query = "SELECT * FROM ramverk1_Post WHERE userId = $id";
+            $limit = 5;
+            $totalPosts = count($this->post->countPosts($query));
+            $currentPage = isset($_GET["page"]) ? $_GET["page"] : 1;
+            $offset = ($currentPage - 1) * $limit;
+            $pagination = $this->pagination->renderPagination($totalPosts, $offset, $limit, $currentPage, $di);
+
             $content = $this->user->getUserInfo($id, 180);
-            $posts = $this->post->getUserPosts($id);
+            $posts = $this->post->getUserPosts($id, $limit, $offset);
+            $comments = $this->comment->getRecentCommentsFromUser($id);
         }
 
         $data = [
@@ -112,6 +132,8 @@ class UserController implements
             "session" => $this->session,
             "upvotes" => $this->vote,
             "comment" => $this->comment,
+            "recentComments" => $comments,
+            "pagination" => $pagination,
         ];
 
         $view->add("profile/view", $data);

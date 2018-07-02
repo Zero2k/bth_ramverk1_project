@@ -8,7 +8,7 @@
             <div class="row">
                 <?php if (!$session->get("userId")) : ?>
                 <div class="col-lg-7">
-                    <h1 class="display-4">Learn, Share and Trade</h1>
+                    <h1 class="display-4">Learn, Share and Invest</h1>
                     <p class="lead">
                     Each month, over 50 million traders come to Coin Overflow to learn, share their knowledge about cryptocurrencies.
                     </p>

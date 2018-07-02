@@ -90,18 +90,17 @@ class CoinController implements
         $title      = "View single coin";
         $view       = $this->di->get("view");
         $pageRender = $this->di->get("pageRender");
-        $content = null;
 
         if (!$this->coin->coinExists($name)) {
             $this->di->get("response")->redirect("coin");
         } else {
             $coin = $this->coin->getCoinInfo($name);
-            $content["coin"] = $coin;
-            $content["posts"] = $this->post->getCoinPosts($coin["id"]);
+            $posts = $this->post->getCoinPosts($coin->id);
         }
 
         $data = [
-            "content" => $content,
+            "coin" => $coin,
+            "posts" => $posts,
             "upvotes" => $this->vote,
             "comment" => $this->comment,
         ];
