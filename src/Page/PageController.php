@@ -8,6 +8,7 @@ use \Anax\Configure\ConfigureTrait;
 use \Vibe\User\User;
 use \Vibe\Post\Post;
 use \Vibe\Comment\Comment;
+use \Vibe\Gravatar\Gravatar;
 use \Vibe\User\HTMLForm\CreateUserHomeForm;
 
 /**
@@ -27,6 +28,8 @@ class PageController implements ConfigureInterface, InjectionAwareInterface
 
         $this->comment = new Comment();
         $this->comment->setDb($this->di->get("database"));
+
+        $this->gravatar = new Gravatar();
 
         $this->session = $this->di->get("session");
     }
@@ -70,6 +73,8 @@ class PageController implements ConfigureInterface, InjectionAwareInterface
             "session" => $this->session,
             "recentQuestions" => $this->post->getPost($limit = 5, $offset = 0, $sort = "published", $order = "DESC"),
             "topQuestions" => $this->post->getPost($limit = 5, $offset = 0, $sort = "totalVotes", $order = "DESC"),
+            "activeUsers" => $this->user->getAllUsers("posts", 5),
+            "gravatar" => $this->gravatar,
             "comment" => $this->comment,
         ];
 

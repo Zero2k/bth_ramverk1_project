@@ -3,6 +3,7 @@
 namespace Vibe\User\HTMLForm;
 
 use \Vibe\User\User;
+use \Vibe\Karma\Karma;
 use \Anax\HTMLForm\FormModel;
 use \Anax\DI\DIInterface;
 
@@ -80,6 +81,10 @@ class CreateUserForm extends FormModel
 
         if (!$user->userExists($email)) {
             $user->createUser($username, $email, $password);
+
+            $karma = new Karma();
+            $karma->setDb($this->di->get("database"));
+            $karma->setKarma($user->id, 5);
         } else {
             $this->form->rememberValues();
             $this->form->addOutput("Username or Email already exists");

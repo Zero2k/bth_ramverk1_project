@@ -124,12 +124,12 @@ class User extends ActiveRecordModel
 
 
 
-    public function getAllUsers($limit = 20)
+    public function getAllUsers($order = 'created', $limit = 20)
     {
         $sql = 'SELECT User.*, count(Post.id) as posts FROM ramverk1_User User 
         LEFT JOIN ramverk1_Post Post ON User.id = Post.userId 
         GROUP BY User.id 
-        ORDER BY created DESC 
+        ORDER BY '.$order.' DESC 
         LIMIT ?';
         $users = $this->findAllSql($sql, [$limit]);
 
@@ -147,6 +147,8 @@ class User extends ActiveRecordModel
 
         return $users;
     }
+
+
 
     public function prettyDate($date)
     {

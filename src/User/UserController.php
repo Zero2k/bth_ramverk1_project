@@ -5,6 +5,7 @@ namespace Vibe\User;
 use \Vibe\User\User;
 use \Vibe\Post\Post;
 use \Vibe\Vote\Vote;
+use \Vibe\Karma\Karma;
 use \Vibe\Comment\Comment;
 use \Vibe\Gravatar\Gravatar;
 use \Vibe\Pagination\Pagination;
@@ -47,6 +48,9 @@ class UserController implements
 
         $this->comment = new Comment();
         $this->comment->setDb($this->di->get("database"));
+
+        $this->karma = new Karma();
+        $this->karma->setDb($this->di->get("database"));
 
         $this->gravatar = new Gravatar();
         $this->pagination = new Pagination();
@@ -110,7 +114,9 @@ class UserController implements
             $pagination = $this->pagination->renderPagination($totalPosts, $offset, $limit, $currentPage, $di);
             
             $content = $this->user->getUserInfo($userId, 180);
-            $posts = $this->post->getUserPosts($this->session->get("userId"), $limit, $offset);
+            $posts = $this->post->getUserPosts($userId, $limit, $offset);
+            $comments = $this->comment->getRecentCommentsFromUser($userId);
+            $karma = $this->karma->getKarma($userId);
         } elseif (!$id && !$this->session->get("userId")) {
             $this->di->get("response")->redirect("login");
         } else {
@@ -124,6 +130,7 @@ class UserController implements
             $content = $this->user->getUserInfo($id, 180);
             $posts = $this->post->getUserPosts($id, $limit, $offset);
             $comments = $this->comment->getRecentCommentsFromUser($id);
+            $karma = $this->karma->getKarma($id);
         }
 
         $data = [
@@ -133,6 +140,7 @@ class UserController implements
             "upvotes" => $this->vote,
             "comment" => $this->comment,
             "recentComments" => $comments,
+            "karma" => $karma,
             "pagination" => $pagination,
         ];
 
