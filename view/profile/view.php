@@ -47,7 +47,7 @@
             <div class="col-sm-12">
                 <div class="card my-3">
                     <div class="card-header text-white bg-heatwave">
-                        Top Questions
+                        My Questions
                     </div>
                     <div class="card-body">
                     <?php foreach ($posts as $post) : ?>
@@ -87,7 +87,7 @@
                         <?php foreach ($recentComments as $comment) : ?>
                         <div class="media text-muted pt-3">
                             <div class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
-                                <?php echo substr($comment->text, 0, 150); ?> in <a href="<?= $url->create("questions/$comment->id")?>"><?php echo ucfirst($comment->title) ?></a>
+                                <?php echo substr($comment->text, 0, 150); ?> in <a href="<?= $url->create("questions/$comment->postId")?>"><?php echo ucfirst($comment->title) ?></a>
                             </div>
                         </div>
                         <?php endforeach; ?>

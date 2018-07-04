@@ -29,7 +29,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="d-block mt-3">
+<!--         <div class="d-block mt-3">
             <nav aria-label="Page navigation example">
                 <ul class="pagination pagination-sm justify-content-center">
                     <li class="page-item disabled">
@@ -43,6 +43,6 @@
                     </li>
                 </ul>
             </nav>
-        </div>
+        </div> -->
     </div>
 </main>

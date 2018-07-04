@@ -5,6 +5,7 @@ namespace Vibe\Post\HTMLForm;
 use \Vibe\Post\Post;
 use \Vibe\Coin\Coin;
 use \Vibe\Tag\Tag;
+use \Vibe\Karma\Karma;
 use \Vibe\Tag\TagQuestion;
 use \Anax\HTMLForm\FormModel;
 use \Anax\DI\DIInterface;
@@ -157,6 +158,9 @@ class PostCreateForm extends FormModel
                     $tagQuestion->save();
                 }
             }
+            $karma = new Karma();
+            $karma->setDb($this->di->get("database"));
+            $karma->increaseKarma($userId, 2);
         } else {
             $this->form->addOutput("Error with tags.");
             return false;

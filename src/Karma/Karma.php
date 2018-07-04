@@ -38,6 +38,7 @@ class Karma extends ActiveRecordModel
 
     public function increaseKarma($userId, $karma)
     {
+        $this->find("userId", $userId);
         $this->userId = $userId;
         $this->karma = $this->karma + $karma;
         $this->save();
@@ -48,6 +49,7 @@ class Karma extends ActiveRecordModel
 
     public function decreaseKarma($userId, $karma)
     {
+        $this->find("userId", $userId);
         $this->userId = $userId;
         $this->karma = $this->karma - $karma;
         $this->save();

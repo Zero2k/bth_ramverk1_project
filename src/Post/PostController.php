@@ -4,6 +4,7 @@ namespace Vibe\Post;
 
 use \Vibe\Post\Post;
 use \Vibe\Vote\Vote;
+use \Vibe\Karma\Karma;
 use \Vibe\Comment\Reply;
 use \Vibe\Comment\Comment;
 use \Vibe\Gravatar\Gravatar;
@@ -48,6 +49,9 @@ class PostController implements
 
         $this->reply = new Reply();
         $this->reply->setDb($this->di->get("database"));
+
+        $this->karma = new Karma();
+        $this->karma->setDb($this->di->get("database"));
 
         $this->gravatar = new Gravatar();
         $this->pagination = new Pagination();
@@ -112,6 +116,7 @@ class PostController implements
             /* ADD VIEW TO POST */
             $posts = $this->post->getPostWithUser($id);
             $upvotes = $this->vote->getUpvotes($id);
+            $userId = $this->session->get("userId");
 
             $like = isset($_GET["like"]) ? true : false;
             $dislike = isset($_GET["dislike"]) ? true : false;
@@ -121,23 +126,23 @@ class PostController implements
             $sortBy = isset($_GET["sort"]) ? $_GET["sort"] : 'published';
             $order = isset($_GET["order"]) ? $_GET["order"] : 'DESC';
 
-            if ($like && empty($comment) && $this->session->get("userId")) {
-                $this->vote->likePost($this->session->get("userId"), $id, 1);
+            if ($like && empty($comment) && $userId) {
+                $this->vote->likePost($userId, $id, 1);
                 $this->di->get("response")->redirect("questions/$id");
-            } elseif ($like && $comment && $this->session->get("userId")) {
-                $this->vote->likeComment($this->session->get("userId"), $comment, 1);
-                $this->di->get("response")->redirect("questions/$id");
-            }
-
-            if ($dislike && empty($comment) && $this->session->get("userId")) {
-                $this->vote->likePost($this->session->get("userId"), $id, -1);
-                $this->di->get("response")->redirect("questions/$id");
-            } elseif ($dislike && $comment && $this->session->get("userId")) {
-                $this->vote->likeComment($this->session->get("userId"), $comment, -1);
+            } elseif ($like && $comment && $userId) {
+                $this->vote->likeComment($userId, $comment, 1);
                 $this->di->get("response")->redirect("questions/$id");
             }
 
-            if (!empty($accepted) && $posts[0]->userId == $this->session->get("userId")) {
+            if ($dislike && empty($comment) && $userId) {
+                $this->vote->likePost($userId, $id, -1);
+                $this->di->get("response")->redirect("questions/$id");
+            } elseif ($dislike && $comment && $userId) {
+                $this->vote->likeComment($userId, $comment, -1);
+                $this->di->get("response")->redirect("questions/$id");
+            }
+
+            if (!empty($accepted) && $posts[0]->userId == $userId) {
                 $this->comment->acceptComment($id, $accepted);
                 $this->di->get("response")->redirect("questions/$id");
             }
@@ -146,8 +151,9 @@ class PostController implements
                 $commentId = isset($_POST["commentId"]) ? $_POST["commentId"] : "";
                 $text = isset($_POST["text"]) ? $_POST["text"] : "";
 
-                if ($commentId && $text && $this->session->get("userId")) {
-                    $reply = $this->reply->createReply($this->session->get("userId"), $commentId, $text);
+                if ($commentId && $text && $userId) {
+                    $reply = $this->reply->createReply($userId, $commentId, $text);
+                    $this->karma->increaseKarma($userId, 1);
                     if ($reply) {
                         $this->session->set("flash-$commentId", "Reply was created!");
                         $this->di->get("response")->redirect("questions/$id");

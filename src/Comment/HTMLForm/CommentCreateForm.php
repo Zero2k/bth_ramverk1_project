@@ -3,6 +3,7 @@
 namespace Vibe\Comment\HTMLForm;
 
 use \Vibe\Comment\Comment;
+use \Vibe\Karma\Karma;
 use \Anax\HTMLForm\FormModel;
 use \Anax\DI\DIInterface;
 
@@ -66,9 +67,14 @@ class CommentCreateForm extends FormModel
             $comment = new Comment();
             $comment->setDb($this->di->get("database"));
 
-            $comment->createComment($userId, $postId, $text);
-            $this->form->addOutput("Comment was created.");
-            return true;
+            $newComment = $comment->createComment($userId, $postId, $text);
+            if ($newComment) {
+                $karma = new Karma();
+                $karma->setDb($this->di->get("database"));
+                $karma->increaseKarma($userId, 1);
+                $this->form->addOutput("Comment was created.");
+                return true;
+            }
         }
     }
 }

@@ -148,8 +148,9 @@ class Comment extends ActiveRecordModel
 
     public function getRecentCommentsFromUser($id, $limit = 5)
     {
-        $sql = 'SELECT Post.*, User.username, User.id as userId FROM ramverk1_Post Post
-        LEFT JOIN ramverk1_User User ON Post.userId = User.id
+        $sql = 'SELECT Comment.*, Post.title, User.username, User.id as userId FROM ramverk1_Comment Comment
+        LEFT JOIN ramverk1_User User ON Comment.userId = User.id
+        LEFT JOIN ramverk1_Post Post ON Comment.postId = Post.id
         WHERE User.id = ?
         ORDER BY published DESC
         LIMIT ?';
