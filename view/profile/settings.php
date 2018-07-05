@@ -103,6 +103,7 @@
                                 </div>
                             </div>
                         </form>
+                        <p><?= $session->getOnce("password-match") ?></p>
                     </div>
                 </div>
             </div>

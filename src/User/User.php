@@ -108,7 +108,6 @@ class User extends ActiveRecordModel
     {
         $user = $this->find("id", $id);
         $gravatar   = new Gravatar();
-        $content = null;
 
         $content["id"] = $user->id;
         $content["username"] = ucfirst($user->username);

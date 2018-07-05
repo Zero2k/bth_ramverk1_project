@@ -2,10 +2,10 @@ bth_ramverk1_project - coinOverflow
 ==================================
 
 [![Latest Stable Version]()]()
-[![Build Status]()]()
-[![Build Status]()]()
-[![Code Coverage]()]()
-[![Scrutinizer Code Quality]()]()
+[![Build Status](https://travis-ci.org/Zero2k/bth_ramverk1_project.svg?branch=master)](https://travis-ci.org/Zero2k/bth_ramverk1_project)
+[![Build Status](https://scrutinizer-ci.com/g/Zero2k/bth_ramverk1_project/badges/build.png?b=master)](https://scrutinizer-ci.com/g/Zero2k/bth_ramverk1_project/build-status/master)
+[![Code Coverage](https://scrutinizer-ci.com/g/Zero2k/bth_ramverk1_project/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/Zero2k/bth_ramverk1_project/?branch=master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Zero2k/bth_ramverk1_project/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Zero2k/bth_ramverk1_project/?branch=master)
 
 ## Add Database to Project
 

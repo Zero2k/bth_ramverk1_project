@@ -189,7 +189,7 @@ class UserController implements
                 $this->user->password = $this->user->password;
             } else {
                 if ($newPassword !== $confirmPassword) {
-                    return false;
+                    $this->session->set("password-match", "You need to confirm your password!");
                 }
                 $this->user->username = $this->user->username;
                 $this->user->email = $this->user->email;
@@ -217,6 +217,7 @@ class UserController implements
 
         $data = [
             "content" => $content,
+            "session" => $this->session,
         ];
 
         $view->add("profile/settings", $data);
