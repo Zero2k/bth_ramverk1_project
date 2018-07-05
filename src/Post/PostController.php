@@ -143,8 +143,10 @@ class PostController implements
             }
 
             if (!empty($accepted) && $posts[0]->userId == $userId) {
-                $this->comment->acceptComment($id, $accepted);
-                $this->di->get("response")->redirect("questions/$id");
+                $accpeted = $this->comment->acceptComment($id, $accepted);
+                if ($accepted) {
+                    $this->di->get("response")->redirect("questions/$id");
+                }
             }
 
             if (!empty($_POST)) {

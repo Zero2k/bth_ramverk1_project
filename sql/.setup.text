@@ -8,3 +8,4 @@ source:
 6. tag_mysql.sql
 7. tag2question_mysql.sql
 8. vote_mysql.sql
+9. karma_mysql.sql

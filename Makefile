@@ -110,7 +110,7 @@ check: check-tools-bash check-tools-php
 
 # target: test               - Run all tests.
 .PHONY:  test
-test: bats phpunit phpcs phpmd phploc behat # shellcheck
+test: initdb bats phpunit phpcs phpmd phploc behat # shellcheck
 	@$(call HELPTEXT,$@)
 	composer validate
 
@@ -297,6 +297,13 @@ bats:
 	@$(call HELPTEXT,$@)
 	[ ! -d test ] || $(BATS) test/
 
+
+
+# clean db before tests
+.PHONY: initdb
+initdb:
+	@$(call HELPTEXT,$@)
+	./initdb.sh
 
 
 # ------------------------------------------------------------------------

@@ -50,7 +50,7 @@ class Comment extends ActiveRecordModel
 
 
 
-    public function getCommentPost($postId, $sort, $order)
+    public function getCommentPost($postId, $sort = "published", $order = "DESC")
     {
         $sql = 'SELECT
         Comment.*,
@@ -75,7 +75,7 @@ class Comment extends ActiveRecordModel
             $comment->text = $comment->text;
             $comment->published = $this->prettyDate($comment->published);
             $comment->reply = $this->getReplies($comment->id);
-            if ($comment->upVotes == null && $comment->downVotes == null && $comment->totalVotes == null) {
+            if ($comment->upVotes == null || 0 && $comment->downVotes == null || 0 && $comment->totalVotes == null || 0) {
                 $comment->upVotes = 0;
             } else {
                 $comment->upVotes = round($comment->upVotes / $comment->totalVotes * 100);
@@ -99,6 +99,7 @@ class Comment extends ActiveRecordModel
             }
             $this->save();
         }
+        return $this;
     }
 
 
@@ -109,15 +110,13 @@ class Comment extends ActiveRecordModel
 
         if (!$comments || $comments[0]->id == $commentId) {
             return true;
-        } else {
-            return false;
         }
     }
 
 
     public function getCommentCount($postId)
     {
-        $sql = 'SELECT * FROM ramverk1_Comment Comment WHERE Comment.postId = ?';
+        $sql = 'SELECT Comment.id FROM ramverk1_Comment Comment WHERE Comment.postId = ?';
         $comments = $this->findAllSql($sql, [$postId]);
         return count($comments);
     }
