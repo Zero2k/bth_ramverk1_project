@@ -110,9 +110,9 @@ class PostController implements
 
         if ($this->post->postExists($id, "id")) {
             /* ADD VIEW TO POST */
-                /* if ($id && $this->session->get("userId")) {
-                    $this->post->addPostView($id);
-                } */
+            if ($id && $this->session->get("userId")) {
+                $this->post->addPostView($id);
+            }
             /* ADD VIEW TO POST */
             $posts = $this->post->getPostWithUser($id);
             $upvotes = $this->vote->getUpvotes($id);

@@ -1,4 +1,4 @@
-USE anax_project;
+USE vibe16;
 
 SET NAMES utf8;
 

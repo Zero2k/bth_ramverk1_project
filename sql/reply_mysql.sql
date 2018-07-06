@@ -1,4 +1,4 @@
-USE anax_project;
+USE vibe16;
 
 SET NAMES utf8;
 
@@ -11,7 +11,7 @@ CREATE TABLE ramverk1_Reply
     `id` INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
     `userId` INTEGER NOT NULL,
     `commentId` INTEGER,
-    `text` VARCHAR(120),
+    `text` TEXT,
     `published` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     `created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     `updated` DATETIME,
@@ -25,5 +25,4 @@ CREATE TABLE ramverk1_Reply
 INSERT INTO ramverk1_Reply (id, userId, commentId, text)
     VALUES
     (1, 1, 1, '<p>First reply to comment in Bitcoin</p>'),
-    (2, 1, 1, '<p>Second reply to comment in Bitcoin</p>'),
-    (3, 1, 2, '<p>First reply to comment in Ethereum</p>');
+    (2, 1, 1, '<p>Second reply to comment in Bitcoin</p>');

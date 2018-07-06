@@ -1,4 +1,4 @@
-USE anax_project;
+USE vibe16;
 
 SET NAMES utf8;
 
@@ -15,3 +15,7 @@ CREATE TABLE ramverk1_Karma (
     FOREIGN KEY (userId) REFERENCES ramverk1_User(id) ON DELETE CASCADE
 
 ) ENGINE INNODB CHARACTER SET utf8 COLLATE utf8_swedish_ci;
+
+INSERT INTO ramverk1_Karma (id, userId, karma)
+    VALUES
+    (1, 1, 5);
