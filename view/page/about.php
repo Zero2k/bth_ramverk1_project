@@ -20,7 +20,7 @@
 
             <p><b>Currenty, the following actions will earn you Karma:</b></p>
             <ul>
-                <li>Create a user will give you 1.0 Karma</li>
+                <li>Create a user will give you 5.0 Karma</li>
                 <li>Post a question will give you +2.0 Karma</li>
                 <li>Answer a question will give you +1.0 Karma</li>
             </ul>
