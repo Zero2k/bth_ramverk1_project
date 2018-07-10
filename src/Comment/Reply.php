@@ -27,7 +27,15 @@ class Reply extends ActiveRecordModel
     public $text;
 
 
-
+    /**
+     * Create reply to comment
+     *
+     * @param id $userId.
+     * @param id $commentId.
+     * @param string $text.
+     *
+     * @return this
+     */
     public function createReply($userId, $commentId, $text)
     {
         $this->userId = $userId;

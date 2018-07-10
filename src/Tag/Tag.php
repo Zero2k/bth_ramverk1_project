@@ -24,7 +24,13 @@ class Tag extends ActiveRecordModel
     public $tag;
 
 
-
+    /**
+     * Return all tags
+     *
+     * @param integer $limit.
+     *
+     * @return array
+     */
     public function getAllTags($limit = 10)
     {
         $sql = 'SELECT Tag.id, Tag.tag, count(TagQ.tagId) as total FROM ramverk1_Tag Tag 
@@ -36,7 +42,13 @@ class Tag extends ActiveRecordModel
     }
 
 
-
+    /**
+     * Check if tag exists
+     *
+     * @param string $name.
+     *
+     * @return boolean
+     */
     public function tagExists($name)
     {
         $tag = $this->find("tag", $name);

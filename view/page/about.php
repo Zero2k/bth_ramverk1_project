@@ -24,5 +24,8 @@
                 <li>Post a question will give you +2.0 Karma</li>
                 <li>Answer a question will give you +1.0 Karma</li>
             </ul>
+
+            <h4>Github</h4>
+            <p>Learn more about this project at: https://github.com/Zero2k/bth_ramverk1_project</p>
     </div>
 </main>

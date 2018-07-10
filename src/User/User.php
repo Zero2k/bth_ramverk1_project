@@ -103,7 +103,14 @@ class User extends ActiveRecordModel
     }
 
 
-
+    /**
+     * Get user information.
+     *
+     * @param id $id.
+     * @param integer $size.
+     *
+     * @return object.
+     */
     public function getUserInfo($id, $size)
     {
         $user = $this->find("id", $id);
@@ -122,7 +129,14 @@ class User extends ActiveRecordModel
     }
 
 
-
+    /**
+     * Get all users.
+     *
+     * @param string $order.
+     * @param integer $limit.
+     *
+     * @return array.
+     */
     public function getAllUsers($order = 'created', $limit = 20)
     {
         $sql = 'SELECT User.*, count(Post.id) as posts FROM ramverk1_User User 

@@ -19,6 +19,8 @@ class Karma extends ActiveRecordModel
      * Columns in the table.
      *
      * @var integer $id primary key auto incremented.
+     * @var integer $userId user id.
+     * @var integer $karma.
      */
     public $id;
     public $userId;
@@ -26,6 +28,14 @@ class Karma extends ActiveRecordModel
 
 
 
+    /**
+     * Set karma to user
+     *
+     * @param id $userId.
+     * @param integer $karma.
+     *
+     * @return this
+     */
     public function setKarma($userId, $karma)
     {
         $this->userId = $userId;
@@ -35,7 +45,14 @@ class Karma extends ActiveRecordModel
     }
 
 
-
+    /**
+     * Increase karma for user
+     *
+     * @param id $userId.
+     * @param integer $karma.
+     *
+     * @return this
+     */
     public function increaseKarma($userId, $karma)
     {
         $this->find("userId", $userId);
@@ -46,7 +63,14 @@ class Karma extends ActiveRecordModel
     }
 
 
-
+    /**
+     * Decrease karma for user
+     *
+     * @param id $userId.
+     * @param integer $karma.
+     *
+     * @return this
+     */
     public function decreaseKarma($userId, $karma)
     {
         $this->find("userId", $userId);
@@ -57,7 +81,14 @@ class Karma extends ActiveRecordModel
     }
 
 
-
+    /**
+     * Get user karma
+     *
+     * @param id $userId.
+     * @param integer $karma.
+     *
+     * @return this
+     */
     public function getKarma($userId)
     {
         return $this->find("userId", $userId);

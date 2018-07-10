@@ -45,14 +45,26 @@ class Coin extends ActiveRecordModel
     }
 
 
-
+    /**
+     * Get data about cryptocurrency.
+     *
+     * @param string $name.
+     *
+     * @return array
+     */
     public function getCoinInfo($name)
     {
         return $this->find("slug", $name);
     }
 
 
-
+    /**
+     * Get all cryptocurrencies with posts.
+     *
+     * @param integer $limit.
+     *
+     * @return array
+     */
     public function getTrendingCoins($limit = 5)
     {
         $sql = 'SELECT Coin.id, Coin.name, Coin.slug, count(Post.id) as total_posts 
@@ -66,7 +78,11 @@ class Coin extends ActiveRecordModel
     }
 
 
-
+    /**
+     * Get all cryptocurrencies.
+     *
+     * @return array
+     */
     public function getAllCoins()
     {
         $sql = 'SELECT Coin.id, Coin.description, Coin.name, Coin.slug, count(Post.id) as total_posts 

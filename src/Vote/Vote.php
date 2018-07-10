@@ -27,7 +27,15 @@ class Vote extends ActiveRecordModel
     public $vote;
 
 
-
+    /**
+     * Add like to post / question.
+     *
+     * @param id $userId.
+     * @param id $postId.
+     * @param integer $value.
+     *
+     * @return this.
+     */
     public function likePost($userId, $postId, $value)
     {
         if ($this->userAlreadyVoted($userId, "postId", $postId)) {
@@ -40,7 +48,15 @@ class Vote extends ActiveRecordModel
     }
 
 
-
+    /**
+     * Add like to comment.
+     *
+     * @param id $userId.
+     * @param id $commentId.
+     * @param integer $value.
+     *
+     * @return this.
+     */
     public function likeComment($userId, $commentId, $value)
     {
         if ($this->userAlreadyVoted($userId, "commentId", $commentId)) {
@@ -53,6 +69,15 @@ class Vote extends ActiveRecordModel
     }
 
 
+    /**
+     * Check if user has voted.
+     *
+     * @param id $userId.
+     * @param string $field.
+     * @param id $id.
+     *
+     * @return boolean.
+     */
     public function userAlreadyVoted($userId, $field, $id)
     {
         $sql = 'SELECT * FROM ramverk1_Vote WHERE userId = ? AND '.$field.' = ?;';
@@ -66,7 +91,13 @@ class Vote extends ActiveRecordModel
     }
 
 
-
+    /**
+     * Get all votes related to post / question.
+     *
+     * @param id $poistId.
+     *
+     * @return integer.
+     */
     public function getUpvotes($postId)
     {
         $sql = 'SELECT 

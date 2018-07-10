@@ -35,7 +35,15 @@ class Comment extends ActiveRecordModel
     public $deleted;
 
 
-
+    /**
+     * Create comment
+     *
+     * @param id $userId.
+     * @param id $postId.
+     * @param string $text.
+     *
+     * @return array
+     */
     public function createComment($userId, $postId, $text)
     {
         $this->userId = $userId;
@@ -49,7 +57,15 @@ class Comment extends ActiveRecordModel
     }
 
 
-
+    /**
+     * Get comments related to post
+     *
+     * @param id $postId.
+     * @param string $sort.
+     * @param string $order.
+     *
+     * @return array
+     */
     public function getCommentPost($postId, $sort = "published", $order = "DESC")
     {
         $sql = 'SELECT
@@ -87,7 +103,14 @@ class Comment extends ActiveRecordModel
     }
 
 
-
+    /**
+     * Change accepted field in comment
+     *
+     * @param id $postId.
+     * @param id $commentId.
+     *
+     * @return this
+     */
     public function acceptComment($postId, $commentId)
     {
         if ($this->acceptedCommentExists($postId, $commentId)) {
@@ -102,7 +125,14 @@ class Comment extends ActiveRecordModel
         return $this;
     }
 
-
+    /**
+     * Check if comment has been accepted
+     *
+     * @param id $postId.
+     * @param id $commentId.
+     *
+     * @return boolean
+     */
     public function acceptedCommentExists($postId, $commentId)
     {
         $sql = 'SELECT * FROM ramverk1_Comment Comment WHERE Comment.postId = ? AND Comment.accepted = 1';
@@ -114,6 +144,13 @@ class Comment extends ActiveRecordModel
     }
 
 
+    /**
+     * Count number of comments
+     *
+     * @param id $postId.
+     *
+     * @return integer
+     */
     public function getCommentCount($postId)
     {
         $sql = 'SELECT Comment.id FROM ramverk1_Comment Comment WHERE Comment.postId = ?';
@@ -122,7 +159,13 @@ class Comment extends ActiveRecordModel
     }
 
 
-
+    /**
+     * Get replies based on commentId
+     *
+     * @param id $id.
+     *
+     * @return array
+     */
     public function getReplies($id)
     {
         $sql = 'SELECT Reply.*, User.username, User.email FROM ramverk1_Reply Reply 
@@ -144,7 +187,14 @@ class Comment extends ActiveRecordModel
     }
 
 
-
+    /**
+     * Get recent comments from user
+     *
+     * @param id $id.
+     * @param integer $limit.
+     *
+     * @return array
+     */
     public function getRecentCommentsFromUser($id, $limit = 5)
     {
         $sql = 'SELECT Comment.*, Post.title, User.username, User.id as userId FROM ramverk1_Comment Comment

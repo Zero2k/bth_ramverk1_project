@@ -34,7 +34,13 @@ class Post extends ActiveRecordModel
     public $answers;
 
 
-
+    /**
+     * Get post / questions related to cryptocurrency
+     *
+     * @param integer $id.
+     *
+     * @return array
+     */
     public function getCoinPosts($id)
     {
         $sql = 'SELECT * FROM ramverk1_Post WHERE coinId = ? ORDER BY published DESC';
@@ -57,7 +63,13 @@ class Post extends ActiveRecordModel
     }
 
 
-
+    /**
+     * Get all users post / questions
+     *
+     * @param id $id.
+     *
+     * @return array
+     */
     public function getPostWithUser($id)
     {
         $sql = 'SELECT Post.*, User.username, User.email FROM ramverk1_Post Post 
@@ -84,7 +96,16 @@ class Post extends ActiveRecordModel
     }
 
 
-
+    /**
+     * Get all posts / questions
+     *
+     * @param integer $limit.
+     * @param integer $offset.
+     * @param string $sort.
+     * @param string $order.
+     *
+     * @return array
+     */
     public function getPost($limit = 5, $offset = 0, $sort = "published", $order = "DESC")
     {
         $sql = 'SELECT 
@@ -125,14 +146,27 @@ class Post extends ActiveRecordModel
     }
 
 
-
+    /**
+     * return all posts / questions
+     *
+     * @param string $query.
+     *
+     * @return array
+     */
     public function countPosts($query)
     {
         return $this->findAllSql($query);
     }
 
 
-
+    /**
+     * Get all posts / questions related to tag
+     *
+     * @param string $name.
+     * @param integer $limit.
+     *
+     * @return array
+     */
     public function getAllPostFromTag($name, $limit = 10)
     {
         $sql = 'SELECT Post.* FROM ramverk1_Post Post
@@ -159,7 +193,15 @@ class Post extends ActiveRecordModel
     }
 
 
-
+    /**
+     * Get all posts / questions related to user
+     *
+     * @param id $id.
+     * @param integer $limit.
+     * @param integer $offset.
+     *
+     * @return array
+     */
     public function getUserPosts($id, $limit = 5, $offset = 0)
     {
         $sql = 'SELECT Post.*, Coin.name, Coin.slug FROM ramverk1_Post Post 
@@ -170,7 +212,16 @@ class Post extends ActiveRecordModel
     }
 
 
-
+    /**
+     * Create post / question
+     *
+     * @param id $userId.
+     * @param id $coinId.
+     * @param string $title.
+     * @param string $text.
+     *
+     * @return this
+     */
     public function createPost($userId, $coinId, $title, $text)
     {
         $this->userId = $userId;
@@ -186,7 +237,15 @@ class Post extends ActiveRecordModel
     }
 
 
-
+    /**
+     * Update post / question
+     *
+     * @param id $userId.
+     * @param id $coinId.
+     * @param string $title.
+     * @param string $text.
+     *
+     */
     public function updatePost($questionId, $userId, $title, $text)
     {
         $this->find("id", $questionId);
@@ -205,7 +264,12 @@ class Post extends ActiveRecordModel
     }
 
 
-
+    /**
+     * Add view to post / question
+     *
+     * @param id $id.
+     *
+     */
     public function addPostView($id)
     {
         $post = $this->find("id", $id);
@@ -216,7 +280,14 @@ class Post extends ActiveRecordModel
     }
 
 
-
+    /**
+     * Check if post / question exists
+     *
+     * @param string $search.
+     * @param string $type.
+     *
+     * @return boolean
+     */
     public function postExists($search, $type)
     {
         switch ($type) {
