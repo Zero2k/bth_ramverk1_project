@@ -10,6 +10,7 @@ bth_ramverk1_project - coinOverflow
 
 This website is part of the last assignment in the course ramverk1 at BTH. coinOverflow is a fully functioning forum with inspiration from stackoverflow and reddit.
 
+![Alt text](screenshots/screenshot_alt2.jpeg)
 
 ## Install your own version
 
